@@ -1,0 +1,22 @@
+model Order {
+  id        Int      @id @default(autoincrement())
+  status    String
+  total     Int
+  createdAt DateTime @default(now())
+
+  items     Item[]
+}
+
+model Item {
+  id        Int @id @default(autoincrement())
+  productId Int
+  qty       Int
+
+  orderId Int
+  order   Order @relation(fields: [orderId], references: [id])
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
