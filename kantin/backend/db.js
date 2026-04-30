@@ -11,7 +11,8 @@ db.exec(`
     name TEXT,
     description TEXT,
     price INTEGER,
-    image TEXT
+    image TEXT,
+    available INTEGER DEFAULT 1
   );
 
   CREATE TABLE IF NOT EXISTS orders (
