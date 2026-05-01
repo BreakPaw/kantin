@@ -8,14 +8,16 @@ const Home = () => {
 
   useEffect(() => {
     const fetchProducts = async () => {
+      console.log("ini api")
       try {
         const res = await api.get("/products");
         setProducts(res.data);
+        console.log("ini hasil fetch data", res.data);
       } catch (err) {
         console.error(err);
       }
     };
-
+    console.log("FETCH JLN")
     fetchProducts();
   }, []);
 

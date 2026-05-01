@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { api } from "../services/api";
 import OrderStatus from "../components/sections/OrderStatus";
 import { Link } from "react-router-dom";
+import { BASE_URL } from "../services/api";
 
 const Success = () => {
   const { orderId } = useParams();
@@ -74,7 +75,7 @@ const Success = () => {
             <div key={i} className="flex items-center justify-between mb-5">
 
               <div className="flex gap-4">
-                <img src={item.image} className="w-16 h-16 rounded-xl object-cover" />
+                <img src={`${BASE_URL}${item.image}`} className="w-16 h-16 rounded-xl object-cover" />
 
                 <div>
                   <p className="font-semibold">{item.name}</p>

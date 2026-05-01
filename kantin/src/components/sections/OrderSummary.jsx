@@ -1,6 +1,7 @@
 import { useCart } from "../../store/CartContext";
 import { useNavigate } from "react-router-dom";
 import { api } from "../../services/api";
+import { BASE_URL } from "../../services/api";
 
 const OrderSummary = ({ form, isValid }) => {
   const {
@@ -57,7 +58,7 @@ const OrderSummary = ({ form, isValid }) => {
         )}
         {cart.map((item) => (
           <div key={item.id} className="flex gap-3">
-            <img src={item.image || "/assets/fallback.webp"} className="w-16 h-16 rounded-lg object-cover" />
+            <img src={`${BASE_URL}${item.image}`} className="w-16 h-16 rounded-lg object-cover" />
 
             <div className="flex-1">
               <p className="font-medium">{item.name}</p>

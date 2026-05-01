@@ -4,9 +4,21 @@ import "dotenv/config";
 import db from "./db.js";
 import multer from "multer";
 import path from "path";
+// import paymentRoutes from "./routes/payment.js";
+// import webhookRoutes from "./routes/webhook.js";
 const app = express();
+// const cors = require('cors');
+// app.use(cors({
+//   origin: 'https://kantin-clean.vercel.app',
+//   credentials: true
+// }));
+app.use(cors({
+  origin: "*",
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
-app.use(cors());
 app.use(express.json());
 
 // 🔥 TEMP STORAGE (gantikan database dulu)
@@ -71,10 +83,10 @@ app.post("/api/v1/orders", (req, res) => {
   }
 
   // 🔥 simulasi status
-  setTimeout(() => db.prepare("UPDATE orders SET status=? WHERE id=?").run("paid", orderId), 15000);
-  setTimeout(() => db.prepare("UPDATE orders SET status=? WHERE id=?").run("preparing", orderId), 20000);
-  setTimeout(() => db.prepare("UPDATE orders SET status=? WHERE id=?").run("ready", orderId), 30000);
-  setTimeout(() => db.prepare("UPDATE orders SET status=? WHERE id=?").run("done", orderId), 40000);
+  // setTimeout(() => db.prepare("UPDATE orders SET status=? WHERE id=?").run("paid", orderId), 15000);
+  // setTimeout(() => db.prepare("UPDATE orders SET status=? WHERE id=?").run("preparing", orderId), 20000);
+  // setTimeout(() => db.prepare("UPDATE orders SET status=? WHERE id=?").run("ready", orderId), 30000);
+  // setTimeout(() => db.prepare("UPDATE orders SET status=? WHERE id=?").run("done", orderId), 40000);
 
   res.json({
     id: orderId,
@@ -260,6 +272,9 @@ app.post("/api/v1/upload", upload.single("image"), (req, res) => {
 });
 // serve static file
 app.use("/uploads", express.static("uploads"));
+
+// app.use("/api/v1/payment", paymentRoutes);
+// app.use("/api/v1/webhook", webhookRoutes);
 
 app.listen(3000, () => {
   console.log("Server running on http://localhost:3000");

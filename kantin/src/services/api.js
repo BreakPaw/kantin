@@ -1,7 +1,6 @@
 import axios from "axios";
-
 export const api = axios.create({
-  baseURL: "http://localhost:3000/api/v1"
+  baseURL: "https://prompter-unbeaten-disparity.ngrok-free.dev/api/v1"
 });
 
-export const BASE_URL = "http://localhost:3000";
+export const BASE_URL = "https://prompter-unbeaten-disparity.ngrok-free.dev";

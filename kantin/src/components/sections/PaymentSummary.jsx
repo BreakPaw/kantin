@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
-import { QRCodeSVG } from "qrcode.react";
-
+import { api } from "../../services/api";
+import { useParams, useNavigate } from "react-router";
 
 const PaymentSummary = ({ order }) => {
-  const total = 425000; // nanti dari backend
-  const expiredAt = new Date(Date.now() + 1000 * 60 * 60); // 1 jam
+  const { orderId } = useParams();
+  const navigate = useNavigate();
 
+  const expiredAt = new Date(Date.now() + 1000 * 60 * 60);
   const [timeLeft, setTimeLeft] = useState("");
 
+  // ⏳ TIMER
   useEffect(() => {
     const interval = setInterval(() => {
       const diff = expiredAt - new Date();
@@ -28,12 +30,43 @@ const PaymentSummary = ({ order }) => {
     return () => clearInterval(interval);
   }, []);
 
+  // 🔥 MIDTRANS PAYMENT
+  useEffect(() => {
+    const pay = async () => {
+      try {
+        const res = await api.post(`/payment/${orderId}`);
+        const token = res.data.token;
+
+        window.snap.pay(token, {
+          onSuccess: function () {
+            navigate(`/success/${orderId}`);
+          },
+          onPending: function () {
+            console.log("pending");
+          },
+          onError: function () {
+            alert("Pembayaran gagal");
+          },
+          onClose: function () {
+            console.log("user close popup");
+          }
+        });
+
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    pay();
+  }, [orderId]);
+
   return (
     <div className="space-y-6">
 
-      {/* Total */}
+      {/* TOTAL */}
       <div className="bg-white rounded-xl p-6 text-center shadow-sm">
         <p className="text-sm text-gray-500">TOTAL PEMBAYARAN</p>
+
         <h2 className="text-3xl font-bold text-green-700 mt-2">
           Rp {order.total.toLocaleString()}
         </h2>
@@ -43,18 +76,10 @@ const PaymentSummary = ({ order }) => {
         </p>
       </div>
 
-      {/* QR */}
+      {/* INFO */}
       <div className="bg-white rounded-xl p-6 text-center shadow-sm">
-        <p className="text-sm text-gray-400 mb-3">PINDAI DISINI</p>
-
-        <QRCodeSVG
-          value={`ORDER-${order.id}-${order.total}`}
-          size={180}
-          className="mx-auto"
-        />
-
-        <p className="text-sm text-gray-500 mt-3">
-          Klik QR Code untuk memperbesar atau simpan gambar.
+        <p className="text-gray-500">
+          Membuka halaman pembayaran...
         </p>
       </div>
 

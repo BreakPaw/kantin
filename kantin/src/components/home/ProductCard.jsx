@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useCart } from "../../store/CartContext";
+import { BASE_URL } from "../../services/api";
 
 const ProductCard = ({ product }) => {
   const [qty, setQty] = useState(0);
@@ -11,7 +12,7 @@ const ProductCard = ({ product }) => {
       {/* Image */}
       <div className="h-44 overflow-hidden">
         <img
-          src={product.image}
+          src={`${BASE_URL}${product.image}`}
           alt={product.name}
           className="w-full h-full object-cover"
         />
