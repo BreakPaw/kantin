@@ -12,12 +12,18 @@ const app = express();
 //   origin: 'https://kantin-clean.vercel.app',
 //   credentials: true
 // }));
-app.use(cors({
-  origin: "*",
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
-  allowedHeaders: ['Content-Type', 'Authorization']
-}));
+app.use(
+  cors({
+    origin: "*",
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+    allowedHeaders: [
+      "Content-Type",
+      "Authorization",
+      "ngrok-skip-browser-warning",
+    ],
+  }),
+);
 
 app.use(express.json());
 
@@ -27,7 +33,7 @@ const storage = multer.diskStorage({
   filename: (req, file, cb) => {
     const ext = path.extname(file.originalname);
     cb(null, Date.now() + ext);
-  }
+  },
 });
 
 const upload = multer({ storage });
@@ -54,22 +60,21 @@ app.post("/api/v1/orders", (req, res) => {
     // 🔥 VALIDASI KERAS
     if (!product) {
       return res.status(400).json({
-        message: `Product tidak ditemukan: ${item.product_id}`
+        message: `Product tidak ditemukan: ${item.product_id}`,
       });
     }
 
     total += product.price * item.qty;
   }
 
-  const result = db.prepare(`
+  const result = db
+    .prepare(
+      `
     INSERT INTO orders (status, total, customer, pickup)
     VALUES (?, ?, ?, ?)
-  `).run(
-    "pending",
-    total,
-    JSON.stringify(customer),
-    JSON.stringify(pickup)
-  );
+  `,
+    )
+    .run("pending", total, JSON.stringify(customer), JSON.stringify(pickup));
 
   const orderId = result.lastInsertRowid;
 
@@ -94,18 +99,21 @@ app.post("/api/v1/orders", (req, res) => {
     total,
     items,
     customer,
-    pickup
+    pickup,
   });
 });
 
 // 🔥 GET ORDER BY ID
 app.get("/api/v1/orders/:id", (req, res) => {
-  const order = db.prepare("SELECT * FROM orders WHERE id=?")
+  const order = db
+    .prepare("SELECT * FROM orders WHERE id=?")
     .get(req.params.id);
 
   if (!order) return res.status(404).json({ message: "Not found" });
 
-  const items = db.prepare(`
+  const items = db
+    .prepare(
+      `
     SELECT 
       items.qty,
       products.id as product_id,
@@ -116,25 +124,26 @@ app.get("/api/v1/orders/:id", (req, res) => {
     FROM items
     JOIN products ON items.productId = products.id
     WHERE items.orderId = ?
-  `).all(req.params.id);
+  `,
+    )
+    .all(req.params.id);
 
   res.json({
     ...order,
     items,
     customer: JSON.parse(order.customer),
-    pickup: JSON.parse(order.pickup)
+    pickup: JSON.parse(order.pickup),
   });
 });
 
 // 🔥 GET ALL ORDERS (UNTUK HISTORY)
 app.get("/api/v1/orders", (req, res) => {
-  const orders = db
-    .prepare("SELECT * FROM orders ORDER BY id DESC")
-    .all();
+  const orders = db.prepare("SELECT * FROM orders ORDER BY id DESC").all();
 
-  const result = orders.map(o => {
-
-    const items = db.prepare(`
+  const result = orders.map((o) => {
+    const items = db
+      .prepare(
+        `
       SELECT 
         items.qty,
         products.id as product_id,
@@ -145,13 +154,15 @@ app.get("/api/v1/orders", (req, res) => {
       FROM items
       JOIN products ON items.productId = products.id
       WHERE items.orderId = ?
-    `).all(o.id);
+    `,
+      )
+      .all(o.id);
 
     return {
       ...o,
       items,
       customer: JSON.parse(o.customer),
-      pickup: JSON.parse(o.pickup)
+      pickup: JSON.parse(o.pickup),
     };
   });
 
@@ -164,25 +175,40 @@ app.get("/api/v1/products", (req, res) => {
 });
 
 app.get("/api/v1/dashboard", (req, res) => {
-  const totalOrders = db.prepare("SELECT COUNT(*) as total FROM orders").get().total;
+  const totalOrders = db
+    .prepare("SELECT COUNT(*) as total FROM orders")
+    .get().total;
 
-  const totalRevenue = db.prepare(`
+  const totalRevenue =
+    db
+      .prepare(
+        `
     SELECT SUM(total) as total FROM orders WHERE status != 'cancelled'
-  `).get().total || 0;
+  `,
+      )
+      .get().total || 0;
 
-  const pending = db.prepare(`
+  const pending = db
+    .prepare(
+      `
     SELECT COUNT(*) as total FROM orders WHERE status='pending'
-  `).get().total;
+  `,
+    )
+    .get().total;
 
-  const processing = db.prepare(`
+  const processing = db
+    .prepare(
+      `
     SELECT COUNT(*) as total FROM orders WHERE status IN ('paid','preparing')
-  `).get().total;
+  `,
+    )
+    .get().total;
 
   res.json({
     totalOrders,
     totalRevenue,
     pending,
-    processing
+    processing,
   });
 });
 
@@ -190,10 +216,14 @@ app.get("/api/v1/dashboard", (req, res) => {
 app.post("/api/v1/products", (req, res) => {
   const { name, description, price, image } = req.body;
 
-  const result = db.prepare(`
+  const result = db
+    .prepare(
+      `
     INSERT INTO products (name, description, price, image)
     VALUES (?, ?, ?, ?)
-  `).run(name, description, price, image);
+  `,
+    )
+    .run(name, description, price, image);
 
   res.json({ id: result.lastInsertRowid });
 });
@@ -202,19 +232,20 @@ app.post("/api/v1/products", (req, res) => {
 app.put("/api/v1/products/:id", (req, res) => {
   const { name, description, price, image } = req.body;
 
-  db.prepare(`
+  db.prepare(
+    `
     UPDATE products
     SET name=?, description=?, price=?, image=?
     WHERE id=?
-  `).run(name, description, price, image, req.params.id);
+  `,
+  ).run(name, description, price, image, req.params.id);
 
   res.json({ message: "updated" });
 });
 
 // DELETE
 app.delete("/api/v1/products/:id", (req, res) => {
-  db.prepare("DELETE FROM products WHERE id=?")
-    .run(req.params.id);
+  db.prepare("DELETE FROM products WHERE id=?").run(req.params.id);
 
   res.json({ message: "deleted" });
 });
@@ -222,14 +253,18 @@ app.delete("/api/v1/products/:id", (req, res) => {
 app.patch("/api/v1/orders/:id/status", (req, res) => {
   const { status } = req.body;
 
-  db.prepare("UPDATE orders SET status=? WHERE id=?")
-    .run(status, req.params.id);
+  db.prepare("UPDATE orders SET status=? WHERE id=?").run(
+    status,
+    req.params.id,
+  );
 
   res.json({ message: "updated" });
 });
 
 app.patch("/api/v1/orders/:id/cancel", (req, res) => {
-  const order = db.prepare("SELECT * FROM orders WHERE id=?").get(req.params.id);
+  const order = db
+    .prepare("SELECT * FROM orders WHERE id=?")
+    .get(req.params.id);
 
   if (!order) return res.status(404).json({ message: "Not found" });
 
@@ -237,8 +272,10 @@ app.patch("/api/v1/orders/:id/cancel", (req, res) => {
     return res.status(400).json({ message: "Tidak bisa dibatalkan" });
   }
 
-  db.prepare("UPDATE orders SET status=? WHERE id=?")
-    .run("cancelled", req.params.id);
+  db.prepare("UPDATE orders SET status=? WHERE id=?").run(
+    "cancelled",
+    req.params.id,
+  );
 
   res.json({ message: "Order cancelled" });
 });
@@ -254,20 +291,20 @@ app.patch("/api/v1/products/:id/toggle", (req, res) => {
 
   const newStatus = product.available ? 0 : 1;
 
-  db.prepare(`
+  db.prepare(
+    `
     UPDATE products 
     SET available=? 
     WHERE id=?
-  `).run(newStatus, req.params.id);
+  `,
+  ).run(newStatus, req.params.id);
 
   res.json({ available: newStatus });
 });
 
-
-
 app.post("/api/v1/upload", upload.single("image"), (req, res) => {
   res.json({
-    image: `/uploads/${req.file.filename}`
+    image: `/uploads/${req.file.filename}`,
   });
 });
 // serve static file
