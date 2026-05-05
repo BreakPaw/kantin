@@ -12,7 +12,7 @@ const ProductCard = ({ product }) => {
       {/* Image */}
       <div className="h-44 overflow-hidden">
         <img
-          src={`${BASE_URL}${product.image}`}
+          src={product.image}
           alt={product.name}
           className="w-full h-full object-cover"
         />
@@ -22,7 +22,7 @@ const ProductCard = ({ product }) => {
       <div className="p-4">
         <h3 className="font-semibold text-lg">{product.name}</h3>
         <p className="text-sm text-gray-500 mt-1">
-          {product.desc}
+          {product.description}
         </p>
 
         {/* Price */}

@@ -9,7 +9,7 @@ const ProductCard = ({ product, onDelete, onToggle, onEdit }) => {
       <img
         src={
           product.image
-            ? `${BASE_URL}${product.image}`
+            ? product.image
             : "/assets/fallback.webp"
         }
         onError={(e) => {

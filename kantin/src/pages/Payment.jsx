@@ -15,7 +15,7 @@ const Payment = () => {
   // 🔹 fetch order
   useEffect(() => {
     const fetchOrder = async () => {
-      const res = await api.get(`/orders/${orderId}`); // nanti dynamic
+      const res = await api.get(`/orders?id=${orderId}`);
       setOrder(res.data);
     };
 
@@ -27,7 +27,7 @@ const Payment = () => {
     if (!order) return;
 
     const interval = setInterval(async () => {
-      const res = await api.get(`/orders/${order.id}`);
+      const res = await api.get(`/orders?id=${orderId}`);
 
       if (res.data.status === "paid") {
         clearInterval(interval);
@@ -36,7 +36,7 @@ const Payment = () => {
     }, 5000);
 
     return () => clearInterval(interval);
-  }, [order]);
+  }, [order?.id]);
 
   if (!order) return <p>Loading...</p>;
 

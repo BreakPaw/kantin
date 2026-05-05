@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import { api } from "../../services/api";
-import { useParams, useNavigate } from "react-router";
+import { useParams, useNavigate } from "react-router-dom";
 
 const PaymentSummary = ({ order }) => {
   const { orderId } = useParams();
   const navigate = useNavigate();
 
-  const expiredAt = new Date(Date.now() + 1000 * 60 * 60);
+  const [expiredAt] = useState(new Date(Date.now() + 1000 * 60 * 60));
   const [timeLeft, setTimeLeft] = useState("");
+  const [file, setFile] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   // ⏳ TIMER
   useEffect(() => {
@@ -30,35 +32,35 @@ const PaymentSummary = ({ order }) => {
     return () => clearInterval(interval);
   }, []);
 
-  // 🔥 MIDTRANS PAYMENT
-  useEffect(() => {
-    const pay = async () => {
-      try {
-        const res = await api.post(`/payment/${orderId}`);
-        const token = res.data.token;
+  // 🔥 UPLOAD BUKTI
+  const handleUpload = async () => {
+    if (!file) return alert("Pilih bukti pembayaran dulu");
 
-        window.snap.pay(token, {
-          onSuccess: function () {
-            navigate(`/success/${orderId}`);
-          },
-          onPending: function () {
-            console.log("pending");
-          },
-          onError: function () {
-            alert("Pembayaran gagal");
-          },
-          onClose: function () {
-            console.log("user close popup");
-          }
+    setLoading(true);
+
+    const reader = new FileReader();
+
+    reader.onloadend = async () => {
+      try {
+        const base64 = reader.result.split(",")[1];
+
+        await api.post("/upload-proof", {
+          file: base64,
+          orderId
         });
 
+        alert("Bukti berhasil dikirim");
+        navigate(`/success/${orderId}`);
       } catch (err) {
         console.error(err);
+        alert("Upload gagal");
+      } finally {
+        setLoading(false);
       }
     };
 
-    pay();
-  }, [orderId]);
+    reader.readAsDataURL(file);
+  };
 
   return (
     <div className="space-y-6">
@@ -68,7 +70,7 @@ const PaymentSummary = ({ order }) => {
         <p className="text-sm text-gray-500">TOTAL PEMBAYARAN</p>
 
         <h2 className="text-3xl font-bold text-green-700 mt-2">
-          Rp {order.total.toLocaleString()}
+          Rp {order?.total?.toLocaleString()}
         </h2>
 
         <p className="text-sm text-yellow-600 mt-2">
@@ -76,11 +78,33 @@ const PaymentSummary = ({ order }) => {
         </p>
       </div>
 
-      {/* INFO */}
+      {/* QR (STATIC) */}
       <div className="bg-white rounded-xl p-6 text-center shadow-sm">
-        <p className="text-gray-500">
-          Membuka halaman pembayaran...
-        </p>
+        <p className="text-gray-500 mb-3">Scan QR untuk bayar</p>
+
+        <img
+          src="/assets/qris.webp" // /🔥 taruh gambar QR kamu di public folder
+          className="w-48 mx-auto"
+        />
+      </div>
+
+      {/* UPLOAD */}
+      <div className="bg-white rounded-xl p-6 text-center shadow-sm">
+        <p className="mb-3 text-gray-500">Upload Bukti Pembayaran</p>
+
+        <input
+          type="file"
+          accept="image/*"
+          onChange={(e) => setFile(e.target.files[0])}
+        />
+
+        <button
+          onClick={handleUpload}
+          disabled={loading}
+          className="mt-4 w-full bg-green-700 text-white py-3 rounded-full"
+        >
+          {loading ? "Uploading..." : "Kirim Bukti Pembayaran"}
+        </button>
       </div>
 
     </div>

@@ -8,16 +8,26 @@ const Home = () => {
 
   useEffect(() => {
     const fetchProducts = async () => {
-      console.log("ini api")
       try {
-        const res = await api.get("/products");
-        setProducts(res.data);
-        console.log("ini hasil fetch data", res.data);
+        const res = await api.get("https://kantin-clean.vercel.app/api/products");
+
+        console.log("RES DATA:", res.data);
+
+        let result = [];
+
+        if (Array.isArray(res.data)) {
+          result = res.data;
+        } else if (Array.isArray(res.data?.data)) {
+          result = res.data.data;
+        } else {
+          console.error("FORMAT DATA SALAH:", res.data);
+        }
+
+        setProducts(result);
       } catch (err) {
         console.error(err);
       }
     };
-    console.log("FETCH JLN")
     fetchProducts();
   }, []);
 

@@ -9,12 +9,18 @@ const OrderSummary = ({ form, isValid }) => {
     getTotalPrice,
     addToCart,
     decreaseQty,
-    removeFromCart
+    removeFromCart,
+    clearCart
   } = useCart();
   const navigate = useNavigate();
 
+  
+
   const handleCheckout = async () => {
-    if (!isValid) return;
+    if (!isValid) {
+      alert("Isi data dengan lengkap dan benar!");
+      return;
+    }
 
     try {
       const res = await api.post("/orders", {
@@ -33,8 +39,8 @@ const OrderSummary = ({ form, isValid }) => {
         }
       });
 
-      const orderId = res.data.id;
-
+      const orderId = res.data[0].id;
+      clearCart();
       // 🔥 navigate ke payment dengan orderId
       navigate(`/payment/${orderId}`);
 
@@ -58,7 +64,9 @@ const OrderSummary = ({ form, isValid }) => {
         )}
         {cart.map((item) => (
           <div key={item.id} className="flex gap-3">
-            <img src={`${BASE_URL}${item.image}`} className="w-16 h-16 rounded-lg object-cover" />
+            <img
+              src={item.image?.startsWith("http") ? item.image : `${BASE_URL}${item.image}`}
+              className="w-16 h-16 rounded-lg object-cover" />
 
             <div className="flex-1">
               <p className="font-medium">{item.name}</p>
