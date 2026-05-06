@@ -1,3 +1,8 @@
+import { useState } from "react";
+import { useParams } from "react-router-dom";
+import { api } from "../../services/api";
+
+
 const steps = [
   {
     title: "Buka Aplikasi E-Wallet",
@@ -18,6 +23,44 @@ const steps = [
 ];
 
 const PaymentSteps = () => {
+  const [file, setFile] = useState(null);
+  const [proof, setProof] = useState(null);
+  
+  const {orderId} = useParams();
+
+  const handleUpload = async () => {
+    if (!file) {
+      alert("Pilih file dulu");
+      return;
+    }
+
+    if(!orderId) {
+      alert("Id order tidak ada");
+      return;
+    }
+
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const res = await api.post("/upload-proof", formData);
+
+      const proofUrl = res.data.url;
+      setProof(proofUrl);
+
+      await api.patch(`/orders/${orderId}/proof`, {
+          proof: proofUrl
+      });
+
+      console.log("URL bukti:", res.data.url);
+
+    } catch (err) {
+      console.error(err);
+      alert("Upload gagal");
+    }
+  };
+
+  
   return (
     <div className="bg-[#f4f2ed] rounded-xl p-6">
 
@@ -52,7 +95,31 @@ const PaymentSteps = () => {
       <p className="text-xs text-gray-400 text-center mt-3">
         Pembayaran aman & terenkripsi
       </p>
+      <div className="mt-8 border-2 border-dashed p-4 rounded-lg text-center">
+        <p className="mb-2 text-gray-500">Upload Bukti Pembayaran</p>
 
+        <input 
+          type="file" 
+          onChange={(e) => setFile(e.target.files[0])}
+        />
+
+        <button 
+          onClick={handleUpload} 
+          className="mt-3 w-full bg-green-700 text-white py-2 rounded-full">
+          Kirim Bukti Pembayaran
+        </button>
+
+        {proof && (
+          <div className="mt-4">
+            <p className="text-sm text-gray-500 mb-2">Preview Bukti:</p>
+            <img 
+              src={proof} 
+              alt="bukti" 
+              className="w-40 mx-auto rounded-lg"
+            />
+          </div>
+        )}
+      </div>
     </div>
   );
 };

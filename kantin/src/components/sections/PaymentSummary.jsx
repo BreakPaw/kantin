@@ -89,24 +89,6 @@ const PaymentSummary = ({ order }) => {
       </div>
 
       {/* UPLOAD */}
-      <div className="bg-white rounded-xl p-6 text-center shadow-sm">
-        <p className="mb-3 text-gray-500">Upload Bukti Pembayaran</p>
-
-        <input
-          type="file"
-          accept="image/*"
-          onChange={(e) => setFile(e.target.files[0])}
-        />
-
-        <button
-          onClick={handleUpload}
-          disabled={loading}
-          className="mt-4 w-full bg-green-700 text-white py-3 rounded-full"
-        >
-          {loading ? "Uploading..." : "Kirim Bukti Pembayaran"}
-        </button>
-      </div>
-
     </div>
   );
 };
