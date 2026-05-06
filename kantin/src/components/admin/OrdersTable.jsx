@@ -110,7 +110,7 @@ const OrdersTable = ({ orders }) => {
                   </div>
 
                   <p className="font-semibold">
-                    Rp {(item.qty * item.price).toLocaleString()}
+                    Rp {((item.qty || 0) * (item.price || 0)).toLocaleString()}
                   </p>
 
                 </div>

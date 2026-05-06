@@ -16,7 +16,7 @@ const HistoryCard = ({ order, onReorder, onCancel }) => {
 
       {/* IMAGE (dummy dulu) */}
       <img
-        src={`${BASE_URL}${order.items?.[0]?.image}`}
+        src={order.items?.[0]?.image}
         className="w-28 h-28 rounded-xl object-cover"
       />
 
@@ -32,9 +32,9 @@ const HistoryCard = ({ order, onReorder, onCancel }) => {
         </h3>
 
         <p className="text-sm text-gray-500 mt-1">
-          {order.items.length} item
-          {order.items.length > 1 && (
-            <> • +{order.items.length - 1} lainnya</>
+          {order.items?.length || 0} item
+          {order.items?.length > 1 && (
+            <> • +{order.items?.length - 1} lainnya</>
           )}
         </p>
 

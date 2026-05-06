@@ -97,7 +97,7 @@ const OrderSummary = ({ form, isValid }) => {
 
               </div>
               <p className="font-semibold text-sm">
-                Rp {(item.price * item.qty).toLocaleString()}
+                Rp {((item.price || 0) * (item.qty || 0)).toLocaleString()}
               </p>
               <p className="text-xs text-gray-400">
                 Rp {item.price.toLocaleString()} / porsi

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { api } from "../../services/api";
+import { useNavigate } from "react-router-dom";
 
 
 const steps = [
@@ -25,7 +26,7 @@ const steps = [
 const PaymentSteps = () => {
   const [file, setFile] = useState(null);
   const [proof, setProof] = useState(null);
-  
+  const navigate = useNavigate();
   const {orderId} = useParams();
 
   const handleUpload = async () => {
@@ -48,8 +49,9 @@ const PaymentSteps = () => {
       const proofUrl = res.data.url;
       setProof(proofUrl);
 
-      await api.patch(`/orders/${orderId}/proof`, {
-          proof: proofUrl
+      await api.patch("/proof", {
+        id: orderId,
+        proof: proofUrl
       });
 
       console.log("URL bukti:", res.data.url);
@@ -88,7 +90,11 @@ const PaymentSteps = () => {
       </div>
 
       {/* Button */}
-      <button className="mt-8 w-full bg-green-700 text-white py-3 rounded-full">
+      <button
+        disabled={!proof}
+        onClick={() => navigate("/history")}
+        className="mt-8 w-full bg-green-700 text-white py-3 rounded-full"
+      >
         Saya Sudah Bayar →
       </button>
 

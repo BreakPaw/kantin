@@ -3,11 +3,13 @@ import { useEffect, useState } from "react";
 import { api } from "../services/api";
 import OrderStatus from "../components/sections/OrderStatus";
 import { Link } from "react-router-dom";
-import { BASE_URL } from "../services/api";
+// import { BASE_URL } from "../services/api";
 
 const Success = () => {
   const { orderId } = useParams();
   const [order, setOrder] = useState(null);
+
+ 
 
   useEffect(() => {
   const fetchOrder = async () => {
@@ -29,6 +31,16 @@ const Success = () => {
 }, [orderId]);
 
   if (!order) return <p>Loading...</p>;
+
+   const customer =
+      typeof order.customer === "string"
+        ? JSON.parse(order.customer)
+    : order.customer;
+
+  const pickup =
+    typeof order.pickup === "string"
+      ? JSON.parse(order.pickup)
+      : order.pickup;
 
   const subtotal = order.total;
   const total = order.total;
@@ -71,11 +83,11 @@ const Success = () => {
           </h3>
 
 
-          {order.items.map((item, i) => (
+          {order.items?.map((item, i) => (
             <div key={i} className="flex items-center justify-between mb-5">
 
               <div className="flex gap-4">
-                <img src={`${BASE_URL}${item.image}`} className="w-16 h-16 rounded-xl object-cover" />
+                <img src={item.image} className="w-16 h-16 rounded-xl object-cover" />
 
                 <div>
                   <p className="font-semibold">{item.name}</p>
@@ -86,7 +98,7 @@ const Success = () => {
               <div className="text-right">
                 <p className="text-sm text-gray-500">{item.qty} Porsi</p>
                 <p className="font-semibold text-green-700">
-                  Rp {(item.qty * item.price).toLocaleString()}
+                  Rp {((item.qty || 0) * (item.price || 0)).toLocaleString()}
                 </p>
               </div>
 
@@ -98,14 +110,14 @@ const Success = () => {
           {/* SUBTOTAL */}
           <div className="flex justify-between text-sm text-gray-600">
             <p>Subtotal</p>
-            <p>Rp {subtotal.toLocaleString()}</p>
+            <p>Rp {(subtotal || 0).toLocaleString()}</p>
           </div>
 
           {/* TOTAL */}
           <div className="flex justify-between items-center">
             <p className="text-lg font-semibold">Total</p>
             <p className="text-lg font-bold text-green-700">
-              Rp {total.toLocaleString()}
+              Rp {(total || 0).toLocaleString()}
             </p>
           </div>
         </div>
@@ -115,14 +127,14 @@ const Success = () => {
 
           <div className="bg-[#f4f2ed] p-6 rounded-xl">
             <p className="text-sm text-gray-500">CUSTOMER</p>
-            <p>{order.customer.name}</p>
-            <p>{order.customer.phone}</p>
+            <p>{customer?.name}</p>
+            <p>{customer?.phone}</p>
           </div>
 
           <div className="bg-[#f4f2ed] p-6 rounded-xl">
             <p className="text-sm text-gray-500">PENGAMBILAN</p>
-            <p>{order.pickup.date}</p>
-            <p>{order.pickup.time}</p>
+            <p>{pickup?.date}</p>
+            <p>{pickup?.time}</p>
           </div>
 
           <div className="bg-green-700 text-white p-6 rounded-xl">
