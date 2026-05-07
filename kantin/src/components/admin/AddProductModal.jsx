@@ -100,7 +100,7 @@ const AddProductModal = ({ open, onClose, onCreated }) => {
 
                 setForm(prev => ({
                   ...prev,
-                  image: res.data.image
+                  image: res.data.url
                 }));
 
               } catch (err) {

@@ -41,13 +41,17 @@ const Menu = () => {
   }, [search]);
 
   const handleDelete = async (id) => {
-    await api.delete(`/products/${id}`);
+    await api.delete("/products",{
+      data: { id }
+    });
     fetchProducts();
   };
 
   const handleToggle = async (id) => {
     try {
-      const res = await api.patch(`/products/${id}/toggle`);
+      const res = await api.patch("/products/toggle", {
+        id
+      });
 
       setProducts(prev =>
         prev.map(p =>

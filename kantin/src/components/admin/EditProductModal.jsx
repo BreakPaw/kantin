@@ -34,7 +34,8 @@ const EditProductModal = ({ open, onClose, product, onUpdated }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    await api.post(`/products/${product.id}`, {
+    await api.patch("/products/", {
+      id: product.id,
       ...form,
       price: Number(form.price)
     });
@@ -107,7 +108,7 @@ const EditProductModal = ({ open, onClose, product, onUpdated }) => {
 
                 setForm(prev => ({
                   ...prev,
-                  image: res.data.image
+                  image: res.data.url
                 }));
 
               } catch (err) {

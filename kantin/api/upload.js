@@ -41,7 +41,7 @@ export default async function handler(req, res) {
       .getPublicUrl(fileName);
 
     return res.status(200).json({
-      image: data.publicUrl,
+      url: data.publicUrl,
     });
 
   } catch (err) {

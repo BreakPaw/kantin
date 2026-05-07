@@ -23,7 +23,8 @@ const Home = () => {
           console.error("FORMAT DATA SALAH:", res.data);
         }
 
-        setProducts(result);
+        const availableProducts = result.filter(p => p.available === 1);
+        setProducts(availableProducts);
       } catch (err) {
         console.error(err);
       }
