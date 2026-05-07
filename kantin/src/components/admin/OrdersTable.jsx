@@ -35,19 +35,19 @@ const OrdersTable = ({ orders }) => {
             {/* CUSTOMER */}
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center text-xs font-semibold">
-                {o.customer.name[0]}
+                {o.customer?.name?.[0] || "?"}
               </div>
-              <p>{o.customer.name}</p>
+              <p>{o.customer?.name || "Unknown"}</p>
             </div>
 
             {/* ITEMS */}
             <div className="text-gray-600">
-              {o.items.length} item
+              {o.items?.length || 0} item
             </div>
 
             {/* TOTAL */}
             <div className="font-semibold">
-              Rp {o.total.toLocaleString()}
+              Rp {(o.total || 0).toLocaleString()}
             </div>
 
             {/* STATUS */}
@@ -69,7 +69,10 @@ const OrdersTable = ({ orders }) => {
 
             {/* TIME */}
             <div className="text-gray-400 text-xs">
-              {new Date(o.createdAt).toLocaleTimeString()}
+              {o.created_at
+                ? new Date(o.created_at).toLocaleTimeString()
+                : "-"
+              }
             </div>
 
           </div>

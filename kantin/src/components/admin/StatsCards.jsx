@@ -17,7 +17,7 @@ const StatsCards = ({ stats }) => {
 
       <Card
         title="Total Pendapatan"
-        value={`Rp ${stats.totalRevenue.toLocaleString()}`}
+        value={`Rp ${(stats.totalRevenue || 0).toLocaleString()}`}
         color="#ca8a04"
       />
 

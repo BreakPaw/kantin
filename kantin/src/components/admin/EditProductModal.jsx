@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { api } from "../../services/api";
-import { BASE_URL } from "../../services/api";
 
 const EditProductModal = ({ open, onClose, product, onUpdated }) => {
   const [form, setForm] = useState({
@@ -35,7 +34,7 @@ const EditProductModal = ({ open, onClose, product, onUpdated }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    await api.put(`/products/${product.id}`, {
+    await api.post(`/products/${product.id}`, {
       ...form,
       price: Number(form.price)
     });
@@ -58,7 +57,7 @@ const EditProductModal = ({ open, onClose, product, onUpdated }) => {
               preview
                 ? preview
                 : form.image
-                ? `${BASE_URL}${form.image}`
+                ? form.image
                 : "/assets/fallback.webp"
             }
             className="w-32 h-32 object-cover rounded-lg border"

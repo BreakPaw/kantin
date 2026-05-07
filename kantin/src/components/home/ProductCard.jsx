@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useCart } from "../../store/CartContext";
-import { BASE_URL } from "../../services/api";
 
 const ProductCard = ({ product }) => {
   const [qty, setQty] = useState(0);

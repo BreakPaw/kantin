@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { api } from "../../services/api";
-import { BASE_URL } from "../../services/api";
 
 const AddProductModal = ({ open, onClose, onCreated }) => {
   const [form, setForm] = useState({
@@ -50,7 +49,7 @@ const AddProductModal = ({ open, onClose, onCreated }) => {
               preview
                 ? preview
                 : form.image
-                ? `${BASE_URL}${form.image}`
+                ? form.image
                 : "/assets/fallback.webp"
             }
             className="w-32 h-32 object-cover rounded-lg border"

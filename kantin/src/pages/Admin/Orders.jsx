@@ -21,7 +21,10 @@ const Orders = () => {
   }, []);
 
   const updateStatus = async (id, status) => {
-    await api.patch(`/orders/${id}/status`, { status });
+    await api.patch("/status", {
+      id,
+      status
+    });
 
     setOrders(prev =>
       prev.map(o =>
@@ -33,6 +36,27 @@ const Orders = () => {
   const filtered = orders.filter(o =>
     filter === "all" ? true : o.status === filter
   );
+
+  const approveOrder = async (id) => {
+    try {
+
+      await api.patch("/status", {
+        id,
+        status: "paid"
+      });
+
+      setOrders(prev =>
+        prev.map(order =>
+          order.id === id
+            ? { ...order, status: "paid" }
+            : order
+        )
+      );
+
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
     <div className="space-y-6">
@@ -83,9 +107,9 @@ const Orders = () => {
             {/* CUSTOMER */}
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center text-xs font-semibold">
-                {o.customer.name[0]}
+                {o.customer?.name?.[0] || "?"}
               </div>
-              <p className="font-medium">{o.customer.name}</p>
+              <p className="font-medium">{o.customer?.name || "Unknown"}</p>
             </div>
 
             {/* TOTAL */}
@@ -113,13 +137,24 @@ const Orders = () => {
             </span>
 
             {/* ACTION */}
-            <div className="col-span-2 flex gap-2">
+            {/* ACTION */}
+            <div className="col-span-2 flex flex-wrap gap-2">
 
+              {/* PREVIEW BUKTI */}
+              {o.proof && (
+                <img
+                  src={o.proof}
+                  alt="proof"
+                  className="w-20 h-20 object-cover rounded-lg border"
+                />
+              )}
+
+              {/* APPROVE */}
               <button
-                onClick={() => updateStatus(o.id, "paid")}
-                className="px-3 py-1 text-xs rounded-full bg-blue-500 text-white hover:opacity-80"
+                onClick={() => approveOrder(o.id)}
+                className="px-3 py-1 text-xs rounded-full bg-blue-600 text-white hover:opacity-80"
               >
-                Paid
+                Approve
               </button>
 
               <button

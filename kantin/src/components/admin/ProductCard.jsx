@@ -1,5 +1,4 @@
 import { api } from "../../services/api";
-import { BASE_URL } from "../../services/api";
 
 const ProductCard = ({ product, onDelete, onToggle, onEdit }) => {
   return (

@@ -88,6 +88,17 @@ export default async function handler(req, res) {
 
     const formatted = data.map(order => ({
       ...order,
+
+      customer:
+        typeof order.customer === "string"
+          ? JSON.parse(order.customer)
+          : order.customer,
+
+      pickup:
+        typeof order.pickup === "string"
+          ? JSON.parse(order.pickup)
+          : order.pickup,
+
       items: order.items.map(item => ({
         qty: item.qty,
         product_id: item.product_id,

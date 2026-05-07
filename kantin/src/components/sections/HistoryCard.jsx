@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import { BASE_URL } from "../../services/api";
 const statusStyle = {
   pending: "bg-yellow-100 text-yellow-700",
   paid: "bg-blue-100 text-blue-700",
