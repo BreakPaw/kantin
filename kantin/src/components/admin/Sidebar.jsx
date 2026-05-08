@@ -1,9 +1,16 @@
 import { NavLink } from "react-router-dom";
+import { supabase } from "../../lib/supabase";
+import { useNavigate } from "react-router-dom";
 
 const Sidebar = ({ onAdd }) => {
   const baseClass = "block p-2 rounded";
   const activeClass = "bg-white";
+  const navigate = useNavigate();
 
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    navigate("/admin/login");
+  };
   return (
     <div className="w-64
   bg-[#eae6dc]
@@ -68,6 +75,16 @@ const Sidebar = ({ onAdd }) => {
         mt-6"
       >
         + Tambah Menu
+      </button>
+
+      <button
+        onClick={handleLogout}
+        className="bg-red-500 text-white
+        py-2 rounded
+        w-full
+        mt-4"
+      >
+        Keluar
       </button>
 
     </div>

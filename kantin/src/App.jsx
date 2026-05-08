@@ -10,6 +10,8 @@ import Payment from "./pages/Payment";
 import Success from "./pages/Success";
 import History from "./pages/History";
 import AdminLayout from "./layouts/AdminLayout";
+import ProtectedRoute from "./components/ProtectedRoute";
+import AdminLogin from "./pages/AdminLogin";
 
 
 function App() {
@@ -24,12 +26,19 @@ function App() {
           <Route path="/history" element={<History />} />
           <Route path="/cart" element={<Cart />} />
         </Route>
-        <Route path="/admin" element={<AdminLayout />}>
+
+        <Route path="/admin" element={
+          <ProtectedRoute>
+            <AdminLayout />
+          </ProtectedRoute>
+        }>
           <Route index element={<Navigate to="dashboard" />} />
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="menu" element={<Menu />} />
           <Route path="orders" element={<Orders />} />
         </Route>
+
+        <Route path="/admin/login" element={<AdminLogin />} />
 
       </Routes>
     </BrowserRouter>
