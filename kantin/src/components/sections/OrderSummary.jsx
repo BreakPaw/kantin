@@ -40,6 +40,16 @@ const OrderSummary = ({ form, isValid }) => {
       });
 
       const orderId = res.data[0].id;
+      
+      const myOrders =
+        JSON.parse(localStorage.getItem("my_orders")) || [];
+
+      myOrders.push(orderId);
+
+      localStorage.setItem(
+        "my_orders",
+        JSON.stringify(myOrders)
+      );
       clearCart();
       // 🔥 navigate ke payment dengan orderId
       navigate(`/payment/${orderId}`);

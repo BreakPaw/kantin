@@ -5,11 +5,11 @@ import { useState } from "react";
 const AdminLayout = () => {
   const [openAdd, setOpenAdd] = useState(false);
   return (
-    <div className="flex min-h-screen">
+    <div className="flex flex-col md:flex-row min-h-screen">
 
       <Sidebar onAdd={() => setOpenAdd(true)} />
 
-      <div className="flex-1 bg-[#f4f2ed] p-6">
+      <div className="flex-1 bg-[#f4f2ed] p-4 md:p-6 overflow-x-hidden">
         <Outlet context={{ openAdd,setOpenAdd }} />
       </div>
 

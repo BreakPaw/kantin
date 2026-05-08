@@ -5,14 +5,21 @@ const Sidebar = ({ onAdd }) => {
   const activeClass = "bg-white";
 
   return (
-    <div className="w-64 bg-[#eae6dc] h-screen p-6 flex flex-col justify-between">
+    <div className="w-64
+  bg-[#eae6dc]
+  h-screen
+  sticky
+  top-0
+  p-6
+  flex flex-col justify-between"
+    >
 
       <div>
         <h1 className="text-green-700 font-bold text-xl mb-10">
           KANTIN ABI
         </h1>
 
-        <div className="space-y-3">
+        <div className="flex md:flex-col gap-3 overflow-x-auto">
 
           <NavLink
             to="/admin/dashboard"
@@ -55,7 +62,10 @@ const Sidebar = ({ onAdd }) => {
 
       <button
         onClick={onAdd}
-        className="bg-green-700 text-white py-2 rounded"
+        className="bg-green-700 text-white
+        py-2 rounded
+        w-full
+        mt-6"
       >
         + Tambah Menu
       </button>

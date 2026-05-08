@@ -4,6 +4,7 @@ import { api } from "../../services/api";
 const Orders = () => {
   const [orders, setOrders] = useState([]);
   const [filter, setFilter] = useState("all");
+  const [selectedImage, setSelectedImage] = useState(null);
 
   const fetchOrders = async () => {
     const res = await api.get("/orders");
@@ -66,7 +67,7 @@ const Orders = () => {
       </h1>
 
       {/* FILTER */}
-      <div className="flex gap-3">
+      <div className="flex gap-3 overflow-x-auto pb-2">
         {["all", "pending", "paid", "preparing", "ready", "done"].map(s => (
           <button
             key={s}
@@ -81,10 +82,10 @@ const Orders = () => {
       </div>
 
       {/* TABLE */}
-      <div className="bg-white rounded-2xl p-6 shadow-sm">
+      <div className="bg-white rounded-2xl p-4 md:p-6 shadow-sm overflow-x-auto">
 
         {/* HEADER */}
-        <div className="grid grid-cols-6 text-sm text-gray-400 mb-4 px-2">
+        <div className="hidden md:grid grid-cols-6 text-sm text-gray-400 mb-4 px-2">
           <p>ID</p>
           <p>Pelanggan</p>
           <p>Total</p>
@@ -96,7 +97,15 @@ const Orders = () => {
         {filtered.map((o) => (
           <div
             key={o.id}
-            className="grid grid-cols-6 items-center bg-[#f8f6f2] p-4 rounded-xl mb-3 hover:bg-[#f1eee7] transition"
+            className="grid grid-cols-6
+            items-center
+            gap-4
+            bg-[#f8f6f2]
+            p-4
+            rounded-xl
+            mb-3
+            hover:bg-[#f1eee7]
+            transition"
           >
 
             {/* ID */}
@@ -119,7 +128,7 @@ const Orders = () => {
 
             {/* STATUS */}
             <span
-              className={`px-3 py-1 text-xs rounded-full font-medium w-fit ${
+              className={`px-3 py-1 text-xs rounded-full font-medium w-fit self-start md:self-auto ${
                 o.status === "pending"
                   ? "bg-yellow-100 text-yellow-600"
                   : o.status === "paid"
@@ -138,14 +147,20 @@ const Orders = () => {
 
             {/* ACTION */}
             {/* ACTION */}
-            <div className="col-span-2 flex flex-wrap gap-2">
+            <div className="col-span-2 flex items-center gap-2 flex-wrap">
 
               {/* PREVIEW BUKTI */}
               {o.proof && (
                 <img
                   src={o.proof}
                   alt="proof"
-                  className="w-20 h-20 object-cover rounded-lg border"
+                  onClick={() => setSelectedImage(o.proof)}
+                  className="w-24 h-24
+                  object-cover
+                  rounded-xl
+                  border
+                  cursor-pointer
+                  shrink-0"
                 />
               )}
 
@@ -177,7 +192,19 @@ const Orders = () => {
         ))}
 
       </div>
-
+      {selectedImage && (
+        <div
+          onClick={() => setSelectedImage(null)}
+          className="fixed inset-0 bg-black/70 flex items-center justify-center z-50"
+        >
+          <img
+            src={selectedImage}
+            alt="preview"
+            onClick={(e) => e.stopPropagation()}
+            className="max-w-[90%] max-h-[90%] rounded-2xl shadow-2xl"
+          />
+        </div>
+      )}  
     </div>
   );
 };

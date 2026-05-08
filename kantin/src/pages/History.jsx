@@ -12,7 +12,16 @@ const History = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    api.get("/orders").then(res => setOrders(res.data));
+    const myOrders =
+      JSON.parse(localStorage.getItem("my_orders")) || [];
+
+    api.get("/orders").then(res => {
+      const filtered = res.data.filter(order =>
+        myOrders.includes(order.id)
+      );
+
+      setOrders(filtered);
+    });
   }, []);
 
   // 🔥 FILTER LOGIC
