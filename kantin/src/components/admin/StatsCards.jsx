@@ -1,5 +1,8 @@
 const Card = ({ title, value, color }) => (
-  <div className="bg-white rounded-xl p-5 shadow-sm border-l-4" style={{ borderColor: color }}>
+  <div
+    className="bg-white rounded-xl p-5 shadow-sm border-l-4"
+    style={{ borderColor: color }}
+  >
     <p className="text-sm text-gray-500">{title}</p>
     <h2 className="text-2xl font-bold mt-1">{value}</h2>
   </div>
@@ -7,13 +10,8 @@ const Card = ({ title, value, color }) => (
 
 const StatsCards = ({ stats }) => {
   return (
-    <div className="grid grid-cols-4 gap-6">
-
-      <Card
-        title="Total Pesanan"
-        value={stats.totalOrders}
-        color="#16a34a"
-      />
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <Card title="Total Pesanan" value={stats.totalOrders} color="#16a34a" />
 
       <Card
         title="Total Pendapatan"
@@ -21,18 +19,9 @@ const StatsCards = ({ stats }) => {
         color="#ca8a04"
       />
 
-      <Card
-        title="Perlu Verifikasi"
-        value={stats.pending}
-        color="#dc2626"
-      />
+      <Card title="Perlu Verifikasi" value={stats.pending} color="#dc2626" />
 
-      <Card
-        title="Dalam Proses"
-        value={stats.processing}
-        color="#059669"
-      />
-
+      <Card title="Dalam Proses" value={stats.processing} color="#059669" />
     </div>
   );
 };

@@ -90,17 +90,17 @@ const Navbar = () => {
         >
           <X size={24} />
         </button>
-        <div className="px-8 pt-20 pb-6 flex flex-col gap-4 font-medium">
+        <div className="pt-20 pb-6 flex flex-col gap-5 font-medium">
           <Link
             to="/"
             onClick={() => setIsOpen(false)}
             className={`font-jakarta text-[16px]
             ${
               location.pathname === "/"
-                ? "text-[#1D6E4F]"
-                : "text-gray-600 hover:text-green-700"
+                ? "text-[#1D6E4F] border-[#1D6E4F]"
+                : "text-gray-600 hover:text-green-700 border-gray-300"
             }
-          `}
+          border-b px-5 pb-4 `}
           >
             Menu
           </Link>
@@ -111,19 +111,19 @@ const Navbar = () => {
             className={`font-jakarta text-[16px]
             ${
               location.pathname === "/history"
-                ? "text-[#1D6E4F]"
-                : "text-gray-600 hover:text-green-700"
+                ? "text-[#1D6E4F] border-[#1D6E4F]"
+                : "text-gray-600 hover:text-green-700 border-gray-300"
             }
-          `}
+          border-b px-5 pb-4 `}
           >
             Riwayat
           </Link>
 
-          <p className="text-gray-600 hover:text-green-700 cursor-pointer">
+          <p className="text-gray-600 hover:text-green-700 cursor-pointer border-b border-gray-300 px-5 pb-4 ">
             Tentang Kami
           </p>
 
-          <div className="flex items-center gap-5">
+          <div className="flex items-center gap-5 px-5">
             <Link
               to="/cart"
               onClick={() => setIsOpen(false)}

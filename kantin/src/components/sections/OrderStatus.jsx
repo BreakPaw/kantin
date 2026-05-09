@@ -3,39 +3,35 @@ const steps = [
   { key: "paid", label: "Dibayar", icon: "💳" },
   { key: "preparing", label: "Diproses", icon: "🍳" },
   { key: "ready", label: "Siap Diambil", icon: "🛍" },
-  { key: "done", label: "Selesai", icon: "✔" }
+  { key: "done", label: "Selesai", icon: "✔" },
 ];
-
 
 const statusIndex = {
   pending: 0,
   paid: 1,
   preparing: 2,
   ready: 3,
-  done: 4
+  done: 4,
 };
 
-const OrderStatus = ({ status,order }) => {
+const OrderStatus = ({ status, order }) => {
   const currentStep = statusIndex[status] ?? 0;
 
-  const progressWidth =
-    (currentStep / (steps.length - 1)) * 100;
+  const progressWidth = (currentStep / (steps.length - 1)) * 100;
 
   return (
     <div className="bg-[#f4f2ed] p-10 rounded-2xl w-full">
-      
       <h3 className="text-center text-lg font-semibold mb-10">
         Status Pengiriman
       </h3>
 
       <div className="relative">
-
         {/* 🔹 Base line (BELAKANG) */}
-        <div className="absolute top-6 left-0 w-full h-[3px] bg-gray-300 rounded-full z-0" />
+        <div className="absolute top-6 left-0 w-full h-0.75 bg-gray-300 rounded-full z-0" />
 
         {/* 🔹 Progress line */}
         <div
-          className="absolute top-6 left-0 h-[3px] bg-yellow-400 rounded-full transition-all duration-500 z-10"
+          className="absolute top-6 left-0 h-0.75 bg-yellow-400 rounded-full transition-all duration-500 z-10"
           style={{ width: `${progressWidth}%` }}
         />
 
@@ -46,7 +42,6 @@ const OrderStatus = ({ status,order }) => {
 
             return (
               <div key={i} className="flex flex-col items-center w-full">
-
                 <div
                   className={`
                     w-12 h-12 rounded-full flex items-center justify-center text-lg
@@ -61,7 +56,7 @@ const OrderStatus = ({ status,order }) => {
                   {step.icon}
                 </div>
 
-                <p className="text-sm mt-3 text-center max-w-[90px]">
+                <p className="text-sm mt-3 text-center max-w-22.5">
                   {step.label}
                 </p>
 

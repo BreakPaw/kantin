@@ -1,7 +1,5 @@
 import Database from "better-sqlite3";
 
-
-
 const db = new Database("database.db");
 
 // 🔥 INIT ALL TABLES (SATU TEMPAT)
@@ -21,6 +19,7 @@ db.exec(`
     total INTEGER,
     customer TEXT,
     pickup TEXT,
+    proof TEXT,
     createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
   );
 
@@ -31,6 +30,12 @@ db.exec(`
     qty INTEGER
   );
 `);
+
+const orderColumns = db.prepare("PRAGMA table_info(orders)").all();
+const hasProof = orderColumns.some((col) => col.name === "proof");
+if (!hasProof) {
+  db.prepare("ALTER TABLE orders ADD COLUMN proof TEXT").run();
+}
 
 // 🔥 SEED (biar ada data)
 const count = db.prepare("SELECT COUNT(*) as total FROM products").get();
@@ -43,46 +48,28 @@ if (count.total === 0) {
 
   insert.run(
     "Nasi Ayam Cabai Garam",
-    "Ayam crispy dengan cabai segar",
-    45000,
-    "/assets/ayam1.png"
+    "",
+    13000,
+    "/assets/nasi-ayam-cabai-garam(1).png",
+  );
+
+  insert.run("Nasi Ayam Penyet", "", 15000, "/assets/nasi-ayam-penyet(1).png");
+
+  insert.run("Nasi Ayam Katsu", "", 15000, "/assets/nasi-ayam-katsu(1).png");
+
+  insert.run(
+    "Nasi Daun Jeruk Ayam Goreng",
+    "",
+    15000,
+    "/assets/nasi-daun-jeruk-ayam.png",
   );
 
   insert.run(
-    "Nasi Ayam Penyet",
-    "Ayam goreng dengan sambal pedas",
-    42000,
-    "/assets/ayam2.png"
-  );
-
-  insert.run(
-    "Nasi Ayam Bakar",
-    "Ayam bakar bumbu manis gurih",
-    43000,
-    "/assets/ayam3.png"
-  );
-
-  insert.run(
-    "Nasi Ayam Geprek",
-    "Ayam geprek sambal bawang",
-    40000,
-    "/assets/ayam4.png"
-  );
-
-  insert.run(
-    "Nasi Rendang",
+    "Salad Sayur",
     "Rendang sapi khas Padang",
-    48000,
-    "/assets/ayam1.png"
-  );
-
-  insert.run(
-    "Nasi Goreng Spesial",
-    "Nasi goreng dengan telur dan ayam",
-    38000,
-    "/assets/ayam2.png"
+    20000,
+    "/assets/salad-sayur.png",
   );
 }
-
 
 export default db;

@@ -37,7 +37,7 @@ const OrderSummary = ({ form, isValid }) => {
         },
       });
 
-      const orderId = res.data[0].id;
+      const orderId = res.data.id;
 
       const myOrders = JSON.parse(localStorage.getItem("my_orders")) || [];
 
@@ -69,8 +69,13 @@ const OrderSummary = ({ form, isValid }) => {
                 src={
                   item.image?.startsWith("http")
                     ? item.image
-                    : `${BASE_URL}${item.image}`
+                    : item.image?.startsWith("/assets/")
+                      ? item.image
+                      : `${BASE_URL}${item.image}`
                 }
+                onError={(e) => {
+                  e.target.src = "/assets/fallback.webp";
+                }}
                 className="aspect-square w-16 h-16 rounded-lg object-cover"
               />
 

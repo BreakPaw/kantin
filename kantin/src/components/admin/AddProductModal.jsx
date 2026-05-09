@@ -31,23 +31,32 @@ const AddProductModal = ({ open, onClose, onCreated }) => {
     onClose();
   };
 
+  const handleCancel = () => {
+    setPreview(null);
+    setForm((prev) => ({ ...prev, image: "" }));
+    onClose();
+  };
+
   return (
     <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50">
-      <div className="bg-white w-full max-w-md rounded-xl p-6 space-y-4">
+      <div className="bg-white w-full max-w-md rounded-lg px-6 py-8 space-y-4 mx-4 md:mx-0">
         <h2 className="text-xl font-semibold">Tambah Produk</h2>
 
         {/* PREVIEW IMAGE */}
         <div className="flex justify-center">
-          <img
-            src={
-              preview
-                ? preview
-                : form.image
-                  ? form.image
-                  : "/assets/fallback.webp"
-            }
-            className="w-32 h-32 object-cover rounded-lg border"
-          />
+          {preview || form.image ? (
+            <img
+              src={preview ? preview : form.image}
+              onError={(e) => {
+                e.target.src = "/assets/fallback.webp";
+              }}
+              className="w-32 h-32 object-cover rounded-lg border"
+            />
+          ) : (
+            <div className="w-32 h-32 rounded-lg border border-dashed border-emerald-200 bg-emerald-50/40 flex items-center justify-center text-xs text-emerald-700">
+              Image preview
+            </div>
+          )}
         </div>
 
         {/* FORM */}
@@ -100,14 +109,14 @@ const AddProductModal = ({ open, onClose, onCreated }) => {
                 alert("Upload gagal");
               }
             }}
-            className="w-full border p-2 rounded"
+            className="w-full rounded-lg border border-dashed border-emerald-200 bg-emerald-50/40 px-3 py-3 text-sm text-emerald-900 file:mr-3 file:rounded-full file:border-0 file:bg-emerald-700 file:px-4 file:py-2 file:text-xs file:font-semibold file:text-white hover:border-emerald-300"
           />
 
           {/* BUTTON */}
           <div className="flex justify-end gap-2 pt-2">
             <button
               type="button"
-              onClick={onClose}
+              onClick={handleCancel}
               className="px-4 py-2 bg-gray-200 rounded"
             >
               Batal

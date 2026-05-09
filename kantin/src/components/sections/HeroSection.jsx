@@ -1,7 +1,7 @@
 const HeroSection = () => {
   return (
     <div>
-      <h1 className="font-jakarta font-bold text-[48px] leading-12 tracking-[-1.2px] text-[#1D6E4F] mb-4">
+      <h1 className="font-jakarta font-bold text-[42px] leading-12 tracking-[-1.2px] text-[#1D6E4F] mb-4">
         Cita Rasa Nusantara
       </h1>
 

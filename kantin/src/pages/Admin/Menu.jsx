@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { api } from "../../services/api";
 import EditProductModal from "../../components/admin/EditProductModal";
-import Sidebar from "../../components/admin/Sidebar";
 import Header from "../../components/admin/Header";
 import ProductGrid from "../../components/admin/ProductGrid";
 import AddProductModal from "../../components/admin/AddProductModal";
@@ -68,32 +67,29 @@ const Menu = () => {
   };
 
   return (
-    <div className="flex h-screen w-full bg-[#f4f2ed] overflow-hidden">
-      {/* CONTENT */}
-      <div className="flex-1 bg-[#f4f2ed] p-8 overflow-y-auto">
-        <Header search={search} setSearch={setSearch} />
-        <ProductGrid
-          products={paginatedProducts}
-          onDelete={handleDelete}
-          onToggle={handleToggle}
-          onEdit={handleEdit}
-        />
+    <div className="space-y-6">
+      <Header search={search} setSearch={setSearch} />
+      <ProductGrid
+        products={paginatedProducts}
+        onDelete={handleDelete}
+        onToggle={handleToggle}
+        onEdit={handleEdit}
+      />
 
-        <Pagination page={page} setPage={setPage} totalPages={totalPages} />
+      <Pagination page={page} setPage={setPage} totalPages={totalPages} />
 
-        <EditProductModal
-          open={openModal}
-          onClose={() => setOpenModal(false)}
-          product={selectedProduct}
-          onUpdated={fetchProducts}
-        />
+      <EditProductModal
+        open={openModal}
+        onClose={() => setOpenModal(false)}
+        product={selectedProduct}
+        onUpdated={fetchProducts}
+      />
 
-        <AddProductModal
-          open={openAdd}
-          onClose={() => setOpenAdd(false)}
-          onCreated={fetchProducts}
-        />
-      </div>
+      <AddProductModal
+        open={openAdd}
+        onClose={() => setOpenAdd(false)}
+        onCreated={fetchProducts}
+      />
     </div>
   );
 };

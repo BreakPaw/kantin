@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -13,12 +13,14 @@ const CheckoutForm = ({ onChange }) => {
   const [timeValue, setTimeValue] = useState(null);
   const [dateValue, setDateValue] = useState(null);
 
+  useEffect(() => {
+    onChange(form);
+  }, [form, onChange]);
+
   const updateForm = (updater) => {
-    setForm((prev) => {
-      const nextForm = typeof updater === "function" ? updater(prev) : updater;
-      onChange(nextForm); // kirim ke parent
-      return nextForm;
-    });
+    setForm((prev) =>
+      typeof updater === "function" ? updater(prev) : updater,
+    );
   };
 
   const handleChange = (e) => {
@@ -102,7 +104,7 @@ const CheckoutForm = ({ onChange }) => {
               }}
               showTimeSelect
               showTimeSelectOnly
-              timeIntervals={1}
+              timeIntervals={30}
               timeCaption="Waktu"
               timeFormat="HH:mm"
               dateFormat="HH:mm"
