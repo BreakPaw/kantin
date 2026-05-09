@@ -29,6 +29,27 @@ const AdminLogin = () => {
     navigate("/admin/dashboard");
   };
 
+  const handleRegister = async () => {
+  setLoading(true);
+
+  const { error } = await supabase.auth.signUp({
+    email,
+    password,
+    options: {
+      emailRedirectTo: "https://kantin-clean.vercel.app/admin/login"
+    }
+  });
+
+  setLoading(false);
+
+  if (error) {
+    alert(error.message);
+    return;
+  }
+
+  alert("Link verifikasi telah dikirim ke email!");
+};
+
   return (
     <div className="min-h-screen bg-[#f4f2ed] flex items-center justify-center p-6">
       <div className="w-full max-w-5xl bg-white rounded-[32px] overflow-hidden shadow-xl grid md:grid-cols-2">
@@ -101,6 +122,14 @@ const AdminLogin = () => {
                 className="w-full py-4 rounded-2xl bg-[#00553A] text-white font-bold text-lg hover:bg-[#00442E] disabled:opacity-70 transition"
               >
                 {loading ? "Memproses..." : "Login ke Dashboard"}
+              </button>
+
+              <button
+                type="button"
+                onClick={handleRegister}
+                className="w-full py-4 rounded-2xl border border-[#00553A] text-[#00553A] font-bold text-lg hover:bg-[#00553A] hover:text-white transition"
+              >
+                Register Admin
               </button>
             </form>
           </div>
