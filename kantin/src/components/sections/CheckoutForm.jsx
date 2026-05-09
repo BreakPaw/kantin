@@ -49,7 +49,7 @@ const CheckoutForm = ({ onChange }) => {
     <div>
       {/* Step */}
       <div className="flex items-center gap-3 mb-6">
-        <div className="w-8 h-8 bg-green-700 text-white flex items-center justify-center rounded-full">
+        <div className="w-8 h-8 bg-[#1D6E4F] text-white flex items-center justify-center rounded-full">
           1
         </div>
         <h2 className="font-jakarta font-bold text-[20px] leading-7 tracking-[-0.5px] text-[#1C1C17]">
@@ -109,7 +109,7 @@ const CheckoutForm = ({ onChange }) => {
               timeFormat="HH:mm"
               dateFormat="HH:mm"
               placeholderText="Pilih jam"
-              className="w-full mt-1 p-3 rounded-xl bg-[#E6E2DA] outline-none focus:border-green-700 focus:ring-2 focus:ring-green-700/20 cursor-pointer"
+              className="w-full mt-1 p-3 rounded-xl bg-[#E6E2DA] outline-none focus:border-[#1D6E4F] focus:ring-2 focus:ring-[#1D6E4F]/20 cursor-pointer"
               popperClassName="kantin-picker-popper"
               calendarClassName="kantin-picker"
             />
@@ -131,7 +131,7 @@ const CheckoutForm = ({ onChange }) => {
               minDate={new Date()}
               dateFormat="yyyy-MM-dd"
               placeholderText="Pilih tanggal"
-              className="w-full mt-1 p-3 rounded-xl bg-[#E6E2DA] outline-none focus:border-green-700 focus:ring-2 focus:ring-green-700/20 cursor-pointer"
+              className="w-full mt-1 p-3 rounded-xl bg-[#E6E2DA] outline-none focus:border-[#1D6E4F] focus:ring-2 focus:ring-[#1D6E4F]/20 cursor-pointer"
               popperClassName="kantin-picker-popper"
               calendarClassName="kantin-picker"
             />

@@ -21,7 +21,7 @@ const ProductCard = ({ product, onDelete, onToggle, onEdit }) => {
               type="checkbox"
               checked={!!product.available}
               onChange={() => onToggle(product.id)}
-              className="w-6 h-6 accent-green-700 cursor-pointer"
+              className="w-6 h-6 accent-[#1D6E4F] cursor-pointer"
             />
           </label>
         </div>
@@ -31,7 +31,7 @@ const ProductCard = ({ product, onDelete, onToggle, onEdit }) => {
         </p>
 
         <div className="mt-2 flex items-center justify-between">
-          <p className="text-green-700 font-semibold text-sm">
+          <p className="text-[#1D6E4F] font-semibold text-sm">
             Rp {product.price.toLocaleString()}
           </p>
 

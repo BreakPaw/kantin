@@ -28,12 +28,12 @@ const AdminLayout = () => {
             <div className="flex items-center justify-between px-4 py-3">
               <button
                 onClick={() => setDrawerOpen(true)}
-                className="rounded-lg bg-white px-3 py-2 text-sm text-green-800 shadow-sm"
+                className="rounded-lg bg-white px-3 py-2 text-sm text-[#1D6E4F] shadow-sm"
                 aria-label="Buka menu"
               >
                 Menu
               </button>
-              <p className="text-sm font-semibold text-green-900">
+              <p className="text-sm font-semibold text-[#1D6E4F]">
                 {pageTitle}
               </p>
               <div className="w-9" />

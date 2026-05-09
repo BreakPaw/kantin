@@ -122,7 +122,7 @@ const AddProductModal = ({ open, onClose, onCreated }) => {
               Batal
             </button>
 
-            <button className="px-4 py-2 bg-green-700 text-white rounded">
+            <button className="px-4 py-2 bg-[#1D6E4F] text-white rounded">
               Tambah
             </button>
           </div>

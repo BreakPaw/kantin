@@ -26,13 +26,13 @@ const Navbar = () => {
               ${
                 location.pathname === "/"
                   ? "text-[#1D6E4F]"
-                  : "text-gray-600 hover:text-green-700"
+                  : "text-gray-600 hover:text-[#1D6E4F]"
               }
             `}
           >
             Menu
             {location.pathname === "/" && (
-              <span className="absolute left-0 -bottom-1 w-full h-0.5 bg-green-700"></span>
+              <span className="absolute left-0 -bottom-1 w-full h-0.5 bg-[#1D6E4F]"></span>
             )}
           </Link>
 
@@ -42,18 +42,18 @@ const Navbar = () => {
               ${
                 location.pathname === "/history"
                   ? "text-[#1D6E4F]"
-                  : "text-gray-600 hover:text-green-700"
+                  : "text-gray-600 hover:text-[#1D6E4F]"
               }
             `}
           >
             Riwayat
             {location.pathname === "/history" && (
-              <span className="absolute left-0 -bottom-1 w-full h-0.5 bg-green-700"></span>
+              <span className="absolute left-0 -bottom-1 w-full h-0.5 bg-[#1D6E4F]"></span>
             )}
           </Link>
 
           {/* TENTANG */}
-          <p className="text-gray-600 hover:text-green-700 cursor-pointer">
+          <p className="text-gray-600 hover:text-[#1D6E4F] cursor-pointer">
             Tentang Kami
           </p>
 
@@ -64,7 +64,7 @@ const Navbar = () => {
           </Link>
 
           {/* PROFILE */}
-          <User size={22} className="text-green-700 cursor-pointer" />
+          <User size={22} className="text-[#1D6E4F] cursor-pointer" />
         </div>
 
         <button
@@ -98,7 +98,7 @@ const Navbar = () => {
             ${
               location.pathname === "/"
                 ? "text-[#1D6E4F] border-[#1D6E4F]"
-                : "text-gray-600 hover:text-green-700 border-gray-300"
+                : "text-gray-600 hover:text-[#1D6E4F] border-gray-300"
             }
           border-b px-5 pb-4 `}
           >
@@ -112,14 +112,14 @@ const Navbar = () => {
             ${
               location.pathname === "/history"
                 ? "text-[#1D6E4F] border-[#1D6E4F]"
-                : "text-gray-600 hover:text-green-700 border-gray-300"
+                : "text-gray-600 hover:text-[#1D6E4F] border-gray-300"
             }
           border-b px-5 pb-4 `}
           >
             Riwayat
           </Link>
 
-          <p className="text-gray-600 hover:text-green-700 cursor-pointer border-b border-gray-300 px-5 pb-4 ">
+          <p className="text-gray-600 hover:text-[#1D6E4F] cursor-pointer border-b border-gray-300 px-5 pb-4 ">
             Tentang Kami
           </p>
 
@@ -133,7 +133,7 @@ const Navbar = () => {
               <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-red-500 rounded-full"></span>
             </Link>
 
-            <User size={22} className="text-green-700 cursor-pointer" />
+            <User size={22} className="text-[#1D6E4F] cursor-pointer" />
           </div>
         </div>
       </div>

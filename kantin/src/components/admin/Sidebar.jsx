@@ -26,7 +26,7 @@ const Sidebar = ({ onAdd, open = false, onClose }) => {
         }`}
       >
         <div className="mb-6 flex items-center justify-between md:hidden">
-          <h1 className="text-green-700 font-bold text-lg">KANTIN ABI</h1>
+          <h1 className="text-[#1D6E4F] font-bold text-lg">KANTIN ABI</h1>
           <button
             onClick={onClose}
             className="rounded-lg bg-white px-2 py-1 text-sm"

@@ -84,13 +84,13 @@ const PaymentSteps = () => {
 
   return (
     <div className="bg-[#f4f2ed] rounded-xl p-6">
-      <h3 className="font-semibold text-green-700 mb-6">Langkah Pembayaran</h3>
+      <h3 className="font-semibold text-[#1D6E4F] mb-6">Langkah Pembayaran</h3>
 
       <div className="space-y-5">
         {steps.map((step, i) => (
           <div key={i} className="flex gap-4">
             {/* Number */}
-            <div className="w-7 h-7 flex items-center justify-center bg-green-200 text-green-700 rounded-full text-sm font-semibold">
+            <div className="w-7 h-7 flex items-center justify-center bg-green-200 text-[#1D6E4F] rounded-full text-sm font-semibold">
               {i + 1}
             </div>
 
@@ -108,7 +108,7 @@ const PaymentSteps = () => {
         onClick={handleConfirmPaid}
         className={`mt-8 w-full py-3 rounded-full ${
           proof
-            ? "bg-green-700 text-white"
+            ? "bg-[#1D6E4F] text-white"
             : "bg-gray-300 text-gray-500 cursor-not-allowed"
         }`}
       >
@@ -125,7 +125,7 @@ const PaymentSteps = () => {
 
         <button
           onClick={handleUpload}
-          className="mt-3 w-full bg-green-700 text-white py-2 rounded-full"
+          className="mt-3 w-full bg-[#1D6E4F] text-white py-2 rounded-full"
         >
           Kirim Bukti Pembayaran
         </button>

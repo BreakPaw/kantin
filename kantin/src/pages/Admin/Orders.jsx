@@ -53,7 +53,7 @@ const Orders = () => {
   return (
     <div className="space-y-5">
       <div>
-        <h1 className="text-2xl font-bold text-green-700">Pesanan</h1>
+        <h1 className="text-2xl font-bold text-[#1D6E4F]">Pesanan</h1>
         <p className="text-sm text-gray-500">
           Kelola status dan bukti pembayaran.
         </p>
@@ -65,9 +65,9 @@ const Orders = () => {
           <button
             key={s}
             onClick={() => setFilter(s)}
-            className={`px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition ${
+            className={`px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition ${
               filter === s
-                ? "bg-green-700 text-white"
+                ? "bg-[#1D6E4F] text-white"
                 : "bg-gray-100 text-gray-600"
             }`}
           >
@@ -81,7 +81,7 @@ const Orders = () => {
         {filtered.map((o) => (
           <div
             key={o.id}
-            className="rounded-2xl border border-[#efe9dd] bg-white p-4 shadow-sm"
+            className="rounded-lg border border-[#efe9dd] bg-white p-4 shadow-sm"
           >
             <div className="flex items-start justify-between gap-3">
               <div>

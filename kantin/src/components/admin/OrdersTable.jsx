@@ -50,7 +50,7 @@ const OrdersTable = ({ orders }) => {
               </div>
 
               <div className="mt-3 flex items-center justify-between text-sm">
-                <p className="font-semibold text-green-800">
+                <p className="font-semibold text-[#1D6E4F]">
                   Rp {(o.total || 0).toLocaleString()}
                 </p>
                 <p className="text-xs text-gray-400">

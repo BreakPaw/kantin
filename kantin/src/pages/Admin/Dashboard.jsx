@@ -25,7 +25,7 @@ const Dashboard = () => {
   return (
     <div className="space-y-6 md:space-y-8">
       <div>
-        <h1 className="text-2xl md:text-3xl font-bold text-green-800">
+        <h1 className="text-2xl md:text-3xl font-bold text-[#1D6E4F]">
           Ringkasan Hari Ini
         </h1>
         <p className="text-gray-500 text-sm md:text-base">

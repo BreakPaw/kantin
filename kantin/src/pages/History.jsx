@@ -52,7 +52,7 @@ const History = () => {
             className={`px-4 py-2 rounded-full text-sm whitespace-nowrap transition
               ${
                 filter === btn.value
-                  ? "bg-green-700 text-white"
+                  ? "bg-[#1D6E4F] text-white"
                   : "bg-gray-100 text-gray-600 hover:bg-gray-200"
               }
             `}

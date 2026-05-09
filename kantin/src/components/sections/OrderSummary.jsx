@@ -124,7 +124,7 @@ const OrderSummary = ({ form, isValid }) => {
 
         <div className="flex justify-between font-semibold text-lg">
           <p>Total</p>
-          <p className="text-green-700">
+          <p className="text-[#1D6E4F]">
             Rp {getTotalPrice().toLocaleString()}
           </p>
         </div>
@@ -134,7 +134,7 @@ const OrderSummary = ({ form, isValid }) => {
           disabled={!isValid || cart.length === 0}
           onClick={handleCheckout}
           className={`mt-6 w-full py-3 rounded-full 
-    ${isValid ? "bg-green-700 text-white" : "bg-gray-300 text-gray-500"}
+    ${isValid ? "bg-[#1D6E4F] text-white" : "bg-gray-300 text-gray-500"}
   `}
         >
           Konfirmasi Pesanan
