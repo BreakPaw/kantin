@@ -1,12 +1,11 @@
 import axios from "axios";
-// export const api = axios.create({
-//   baseURL: "/api"
-// });
 
-// export const BASE_URL = "";
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || "http://localhost:3000/api/v1";
+const APP_BASE_URL = import.meta.env.VITE_BASE_URL || "http://localhost:3000";
 
 export const api = axios.create({
-  baseURL: "https://kantin-clean.vercel.app/api",
+  baseURL: API_BASE_URL,
 });
 
-export const BASE_URL = "https://kantin-clean.vercel.app";
+export const BASE_URL = APP_BASE_URL;

@@ -1,18 +1,50 @@
 import Sidebar from "../components/admin/Sidebar";
-import { Outlet } from "react-router-dom";
-import { useState } from "react";
+import { Outlet, useLocation } from "react-router-dom";
+import { useMemo, useState } from "react";
 
 const AdminLayout = () => {
   const [openAdd, setOpenAdd] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const location = useLocation();
+
+  const pageTitle = useMemo(() => {
+    if (location.pathname.includes("/admin/dashboard")) return "Dashboard";
+    if (location.pathname.includes("/admin/orders")) return "Pesanan";
+    if (location.pathname.includes("/admin/menu")) return "Manajemen Menu";
+    return "Admin";
+  }, [location.pathname]);
+
   return (
-    <div className="flex flex-col md:flex-row min-h-screen">
+    <div className="h-screen overflow-hidden bg-[#f4f2ed]">
+      <div className="flex h-full">
+        <Sidebar
+          open={drawerOpen}
+          onClose={() => setDrawerOpen(false)}
+          onAdd={() => setOpenAdd(true)}
+        />
 
-      <Sidebar onAdd={() => setOpenAdd(true)} />
+        <div className="flex-1 overflow-y-auto overflow-x-hidden">
+          <div className="sticky top-0 z-20 border-b border-black/5 bg-[#f4f2ed]/95 backdrop-blur md:hidden">
+            <div className="flex items-center justify-between px-4 py-3">
+              <button
+                onClick={() => setDrawerOpen(true)}
+                className="rounded-lg bg-white px-3 py-2 text-sm text-[#1D6E4F] shadow-sm"
+                aria-label="Buka menu"
+              >
+                Menu
+              </button>
+              <p className="text-sm font-semibold text-[#1D6E4F]">
+                {pageTitle}
+              </p>
+              <div className="w-9" />
+            </div>
+          </div>
 
-      <div className="flex-1 bg-[#f4f2ed] p-4 md:p-6 overflow-x-hidden">
-        <Outlet context={{ openAdd,setOpenAdd }} />
+          <div className="p-4 md:p-6">
+            <Outlet context={{ openAdd, setOpenAdd }} />
+          </div>
+        </div>
       </div>
-
     </div>
   );
 };

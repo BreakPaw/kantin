@@ -7,7 +7,6 @@ const ProductCard = ({ product }) => {
 
   return (
     <div className="bg-white rounded-xl shadow-sm overflow-hidden">
-      
       {/* Image */}
       <div className="h-44 overflow-hidden">
         <img
@@ -20,18 +19,13 @@ const ProductCard = ({ product }) => {
       {/* Content */}
       <div className="p-4">
         <h3 className="font-semibold text-lg">{product.name}</h3>
-        <p className="text-sm text-gray-500 mt-1">
-          {product.description}
-        </p>
+        <p className="text-sm text-gray-500 mt-1">{product.description}</p>
 
         {/* Price */}
-        <p className="text-green-700 font-semibold mt-3">
-          Rp {product.price}
-        </p>
+        <p className="text-[#1D6E4F] font-semibold mt-3">Rp {product.price}</p>
 
         {/* Actions */}
         <div className="flex items-center justify-between mt-4">
-          
           {/* Qty */}
           <div className="flex items-center gap-3 bg-gray-100 px-3 py-1 rounded-full">
             <button onClick={() => setQty(Math.max(0, qty - 1))}>-</button>
@@ -45,10 +39,10 @@ const ProductCard = ({ product }) => {
               if (qty > 0) addToCart(product, qty);
               setQty(0);
             }}
-            className="bg-green-700 text-white px-4 py-2 rounded-full">
+            className="bg-[#1D6E4F] text-white px-4 py-2 rounded-full"
+          >
             Pesan
           </button>
-
         </div>
       </div>
     </div>

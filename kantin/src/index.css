@@ -1,1 +1,122 @@
 @import "tailwindcss";
+
+:root {
+    --kantin-card: #ffffff;
+    --kantin-border: #e5e1d9;
+    --kantin-text: #1c1c17;
+    --kantin-muted: #6f7a73;
+    --kantin-accent: #1d6e4f;
+    --kantin-accent-soft: rgba(29, 110, 79, 0.15);
+}
+
+.kantin-picker-popper {
+    z-index: 60;
+}
+
+.kantin-picker.react-datepicker {
+    border: 1px solid var(--kantin-border);
+    background: var(--kantin-card);
+    border-radius: 16px;
+    box-shadow: 0 20px 40px rgba(28, 28, 23, 0.12);
+    padding: 12px 14px;
+    font-family: "Plus Jakarta Sans", "Segoe UI", sans-serif;
+    color: var(--kantin-text);
+}
+
+.kantin-picker.react-datepicker--time-only {
+    width: 260px;
+}
+
+.kantin-picker .react-datepicker__header {
+    background: transparent;
+    border-bottom: none;
+    padding: 4px 0 10px;
+}
+
+.kantin-picker .react-datepicker__current-month,
+.kantin-picker .react-datepicker-time__header {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.kantin-picker .react-datepicker__day-names {
+    margin-top: 6px;
+}
+
+.kantin-picker .react-datepicker__day-name,
+.kantin-picker .react-datepicker__day,
+.kantin-picker .react-datepicker__time-name {
+    width: 2.2rem;
+    line-height: 2.2rem;
+    margin: 0.1rem;
+    font-size: 13px;
+    color: var(--kantin-text);
+    border-radius: 999px;
+}
+
+.kantin-picker .react-datepicker__day--keyboard-selected,
+.kantin-picker .react-datepicker__day--selected,
+.kantin-picker .react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul li.react-datepicker__time-list-item--selected {
+    background: var(--kantin-accent);
+    color: #fff;
+}
+
+.kantin-picker .react-datepicker__day:hover,
+.kantin-picker .react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul li.react-datepicker__time-list-item:hover {
+    background: var(--kantin-accent-soft);
+}
+
+.kantin-picker .react-datepicker__triangle {
+    display: none;
+}
+
+.kantin-picker .react-datepicker__time-container {
+    border-left: 1px solid var(--kantin-border);
+    width: 100%;
+}
+
+.kantin-picker .react-datepicker__time-container .react-datepicker__time {
+    width: 100%;
+}
+
+.kantin-picker .react-datepicker__time-box {
+    width: 100%;
+    overflow-x: hidden;
+    margin: 0;
+}
+
+.kantin-picker .react-datepicker__time-list {
+    width: 100%;
+    padding-right: 0;
+    overflow-x: hidden;
+    box-sizing: border-box;
+}
+
+.kantin-picker .react-datepicker__time-list-item {
+    border-radius: 10px;
+    padding: 6px 10px;
+    margin: 4px 12px 4px 8px;
+    color: var(--kantin-text);
+}
+
+.kantin-picker.react-datepicker--time-only .react-datepicker__time-container,
+.kantin-picker.react-datepicker--time-only .react-datepicker__time,
+.kantin-picker.react-datepicker--time-only .react-datepicker__time-box,
+.kantin-picker.react-datepicker--time-only .react-datepicker__time-list {
+    width: 100%;
+    max-width: 100%;
+}
+
+.kantin-picker.react-datepicker--time-only .react-datepicker__time-list {
+    overflow-y: auto;
+    scrollbar-width: none;
+}
+
+.kantin-picker.react-datepicker--time-only .react-datepicker__time-list::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+}
+
+.kantin-picker .react-datepicker__navigation-icon::before {
+    border-color: var(--kantin-muted);
+}

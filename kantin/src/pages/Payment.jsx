@@ -3,7 +3,6 @@ import { api } from "../services/api";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 
-
 import PaymentSummary from "../components/sections/PaymentSummary";
 import PaymentSteps from "../components/sections/PaymentSteps";
 
@@ -15,7 +14,7 @@ const Payment = () => {
   // 🔹 fetch order
   useEffect(() => {
     const fetchOrder = async () => {
-      const res = await api.get(`/orders?id=${orderId}`);
+      const res = await api.get(`/orders/${orderId}`);
       setOrder(res.data);
     };
 
@@ -27,7 +26,7 @@ const Payment = () => {
     if (!order) return;
 
     const interval = setInterval(async () => {
-      const res = await api.get(`/orders?id=${orderId}`);
+      const res = await api.get(`/orders/${orderId}`);
 
       if (res.data.status === "paid") {
         clearInterval(interval);
@@ -36,20 +35,20 @@ const Payment = () => {
     }, 5000);
 
     return () => clearInterval(interval);
-  }, [order?.id]);
+  }, [order, orderId, navigate]);
 
   if (!order) return <p>Loading...</p>;
 
   return (
     <div className="px-10 py-6">
-
       {/* Title */}
       <div className="text-center mb-10">
-        <h1 className="text-3xl font-bold text-green-700">
+        <h1 className="text-3xl font-bold text-[#1D6E4F]">
           Selesaikan Pembayaran
         </h1>
         <p className="text-gray-500 mt-2 max-w-xl mx-auto">
-          Segera selesaikan pembayaran agar pesanan Anda dapat segera kami proses.
+          Segera selesaikan pembayaran agar pesanan Anda dapat segera kami
+          proses.
         </p>
       </div>
 
@@ -58,7 +57,6 @@ const Payment = () => {
         <PaymentSummary order={order} />
         <PaymentSteps />
       </div>
-
     </div>
   );
 };

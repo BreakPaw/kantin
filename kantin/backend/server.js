@@ -307,6 +307,34 @@ app.post("/api/v1/upload", upload.single("image"), (req, res) => {
     image: `/uploads/${req.file.filename}`,
   });
 });
+
+app.post("/api/v1/upload-proof", upload.single("file"), (req, res) => {
+  if (!req.file) {
+    return res.status(400).json({ message: "File kosong" });
+  }
+
+  res.json({
+    url: `/uploads/${req.file.filename}`,
+  });
+});
+
+app.patch("/api/v1/proof", (req, res) => {
+  const { id, proof } = req.body;
+
+  if (!id || !proof) {
+    return res.status(400).json({ message: "Data tidak lengkap" });
+  }
+
+  const order = db.prepare("SELECT * FROM orders WHERE id=?").get(id);
+
+  if (!order) {
+    return res.status(404).json({ message: "Not found" });
+  }
+
+  db.prepare("UPDATE orders SET proof=? WHERE id=?").run(proof, id);
+
+  res.json({ message: "Proof saved" });
+});
 // serve static file
 app.use("/uploads", express.static("uploads"));
 

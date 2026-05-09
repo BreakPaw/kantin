@@ -51,11 +51,13 @@ const AdminLogin = () => {
 };
 
   return (
-    <div className="min-h-screen bg-[#f4f2ed] flex items-center justify-center p-6">
-      <div className="w-full max-w-5xl bg-white rounded-[32px] overflow-hidden shadow-xl grid md:grid-cols-2">
-
+    <div className="min-h-screen bg-[#f4f2ed] flex flex-col items-center justify-center p-6">
+      <h1 className="font-jakarta font-bold text-[24px] leading-12 tracking-[-1.2px] text-[#1D6E4F] mb-4 block md:hidden">
+        KANTIN ABI
+      </h1>
+      <div className="w-full max-w-md md:max-w-5xl mx-auto bg-white rounded-lg overflow-hidden shadow-xl grid md:grid-cols-2">
         {/* LEFT */}
-        <div className="hidden md:flex relative bg-[#00553A] p-10 text-white flex-col justify-between">
+        <div className="hidden md:flex relative bg-[#1D6E4F] p-10 text-white flex-col justify-between">
           <div>
             <h1 className="text-3xl font-bold">KANTIN ABI</h1>
           </div>
@@ -74,20 +76,16 @@ const AdminLogin = () => {
         </div>
 
         {/* RIGHT */}
-        <div className="p-8 md:p-12 flex items-center">
+        <div className="px-6 py-10 md:p-12 flex items-center">
           <div className="w-full">
-
             <div className="mb-10">
-              <h2 className="text-3xl font-bold text-[#00553A]">
-                Masuk Admin
-              </h2>
-                           <p className="text-gray-500 mt-2">
+              <h2 className="text-3xl font-bold text-[#1D6E4F]">Masuk Admin</h2>
+              <p className="text-gray-500 mt-2">
                 Login untuk mengakses dashboard admin.
               </p>
             </div>
 
             <form onSubmit={handleLogin} className="space-y-6">
-
               <div>
                 <label className="text-sm text-gray-600 block mb-2">
                   Email
@@ -119,7 +117,7 @@ const AdminLogin = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-4 rounded-2xl bg-[#00553A] text-white font-bold text-lg hover:bg-[#00442E] disabled:opacity-70 transition"
+                className="w-full py-4 rounded-2xl bg-[#1D6E4F] text-white font-bold text-lg hover:bg-[#00442E] disabled:opacity-70 transition"
               >
                 {loading ? "Memproses..." : "Login ke Dashboard"}
               </button>

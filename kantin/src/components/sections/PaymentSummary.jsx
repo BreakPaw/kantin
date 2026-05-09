@@ -46,7 +46,7 @@ const PaymentSummary = ({ order }) => {
 
         await api.post("/upload-proof", {
           file: base64,
-          orderId
+          orderId,
         });
 
         alert("Bukti berhasil dikirim");
@@ -64,12 +64,11 @@ const PaymentSummary = ({ order }) => {
 
   return (
     <div className="space-y-6">
-
       {/* TOTAL */}
       <div className="bg-white rounded-xl p-6 text-center shadow-sm">
         <p className="text-sm text-gray-500">TOTAL PEMBAYARAN</p>
 
-        <h2 className="text-3xl font-bold text-green-700 mt-2">
+        <h2 className="text-3xl font-bold text-[#1D6E4F] mt-2">
           Rp {order?.total?.toLocaleString()}
         </h2>
 
