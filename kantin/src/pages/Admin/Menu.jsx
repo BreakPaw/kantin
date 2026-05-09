@@ -16,15 +16,15 @@ const Menu = () => {
 
   const PER_PAGE = 6;
 
-  const filteredProducts = products.filter(p =>
-    p.name.toLowerCase().includes(search.toLowerCase())
+  const filteredProducts = products.filter((p) =>
+    p.name.toLowerCase().includes(search.toLowerCase()),
   );
 
   const totalPages = Math.ceil(filteredProducts.length / PER_PAGE);
 
   const paginatedProducts = filteredProducts.slice(
     (page - 1) * PER_PAGE,
-    page * PER_PAGE
+    page * PER_PAGE,
   );
 
   const fetchProducts = async () => {
@@ -41,26 +41,19 @@ const Menu = () => {
   }, [search]);
 
   const handleDelete = async (id) => {
-    await api.delete("/products",{
-      data: { id }
-    });
+    await api.delete(`/products/${id}`);
     fetchProducts();
   };
 
   const handleToggle = async (id) => {
     try {
-      const res = await api.patch("/products/toggle", {
-        id
-      });
+      const res = await api.patch(`/products/${id}/toggle`);
 
-      setProducts(prev =>
-        prev.map(p =>
-          p.id === id
-            ? { ...p, available: res.data.available }
-            : p
-        )
+      setProducts((prev) =>
+        prev.map((p) =>
+          p.id === id ? { ...p, available: res.data.available } : p,
+        ),
       );
-
     } catch (err) {
       console.error(err);
     }
@@ -76,8 +69,6 @@ const Menu = () => {
 
   return (
     <div className="flex h-screen w-full bg-[#f4f2ed] overflow-hidden">
-
-
       {/* CONTENT */}
       <div className="flex-1 bg-[#f4f2ed] p-8 overflow-y-auto">
         <Header search={search} setSearch={setSearch} />
@@ -88,13 +79,7 @@ const Menu = () => {
           onEdit={handleEdit}
         />
 
-        <Pagination
-          page={page}
-          setPage={setPage}
-          totalPages={totalPages}
-        />
-
-        
+        <Pagination page={page} setPage={setPage} totalPages={totalPages} />
 
         <EditProductModal
           open={openModal}
@@ -108,9 +93,7 @@ const Menu = () => {
           onClose={() => setOpenAdd(false)}
           onCreated={fetchProducts}
         />
-
       </div>
-
     </div>
   );
 };

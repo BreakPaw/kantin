@@ -11,8 +11,7 @@ const CartSummary = () => {
   if (items === 0) return null;
 
   return (
-    <div className="fixed bottom-4 left-1/2 -translate-x-1/2 w-[90%] max-w-3xl bg-green-700 text-white rounded-xl px-6 py-4 flex items-center justify-between shadow-lg">
-      
+    <div className="fixed bottom-4 left-1/2 -translate-x-1/2 w-[90%] max-w-3xl bg-green-700 text-white rounded-xl px-4 md:px-6 py-4 flex items-center justify-between shadow-lg gap">
       {/* Left */}
       <div>
         <p className="text-sm opacity-80">TOTAL PESANAN</p>
@@ -22,10 +21,12 @@ const CartSummary = () => {
       </div>
 
       {/* Button */}
-      <button onClick={() => navigate("/checkout")} className="bg-white text-green-700 px-5 py-2 rounded-full font-medium">
+      <button
+        onClick={() => navigate("/checkout")}
+        className="bg-white text-green-700 px-5 py-2 rounded-full font-medium  text-[14px]"
+      >
         Lanjut Pemesanan →
       </button>
-
     </div>
   );
 };

@@ -9,7 +9,7 @@ const Home = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await api.get("https://kantin-clean.vercel.app/api/products");
+        const res = await api.get("/products");
 
         console.log("RES DATA:", res.data);
 
@@ -23,7 +23,7 @@ const Home = () => {
           console.error("FORMAT DATA SALAH:", res.data);
         }
 
-        const availableProducts = result.filter(p => p.available === 1);
+        const availableProducts = result.filter((p) => p.available === 1);
         setProducts(availableProducts);
       } catch (err) {
         console.error(err);
@@ -33,13 +33,11 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="bg-[#f8f6f2] min-h-screen pb-24">
+    <div className="bg-[#f8f6f2] min-h-screen pb-24 px-8 md:px-10">
       <HeroSection />
 
       {products.length === 0 ? (
-        <p className="text-center mt-10 text-gray-500">
-          Loading menu...
-        </p>
+        <p className="text-center mt-10 text-gray-500">Loading menu...</p>
       ) : (
         <ProductList products={products} />
       )}

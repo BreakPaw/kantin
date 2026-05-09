@@ -1,16 +1,16 @@
 import { useState, useEffect } from "react";
-import { api } from "../../services/api";
+import { api, BASE_URL } from "../../services/api";
 
 const AddProductModal = ({ open, onClose, onCreated }) => {
   const [form, setForm] = useState({
     name: "",
     description: "",
     price: "",
-    image: ""
+    image: "",
   });
 
   const [preview, setPreview] = useState(null);
-  
+
   useEffect(() => {
     return () => {
       if (preview) URL.revokeObjectURL(preview);
@@ -23,7 +23,7 @@ const AddProductModal = ({ open, onClose, onCreated }) => {
 
     await api.post("/products", {
       ...form,
-      price: Number(form.price)
+      price: Number(form.price),
     });
 
     setForm({ name: "", description: "", price: "", image: "" });
@@ -31,16 +31,10 @@ const AddProductModal = ({ open, onClose, onCreated }) => {
     onClose();
   };
 
-  
-
   return (
     <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50">
-
       <div className="bg-white w-full max-w-md rounded-xl p-6 space-y-4">
-
-        <h2 className="text-xl font-semibold">
-          Tambah Produk
-        </h2>
+        <h2 className="text-xl font-semibold">Tambah Produk</h2>
 
         {/* PREVIEW IMAGE */}
         <div className="flex justify-center">
@@ -49,8 +43,8 @@ const AddProductModal = ({ open, onClose, onCreated }) => {
               preview
                 ? preview
                 : form.image
-                ? form.image
-                : "/assets/fallback.webp"
+                  ? form.image
+                  : "/assets/fallback.webp"
             }
             className="w-32 h-32 object-cover rounded-lg border"
           />
@@ -58,7 +52,6 @@ const AddProductModal = ({ open, onClose, onCreated }) => {
 
         {/* FORM */}
         <form onSubmit={handleSubmit} className="space-y-3">
-
           <input
             placeholder="Nama"
             value={form.name}
@@ -85,24 +78,23 @@ const AddProductModal = ({ open, onClose, onCreated }) => {
             onChange={async (e) => {
               const file = e.target.files[0];
               if (!file) return;
-              
+
               setPreview(URL.createObjectURL(file));
 
               const formData = new FormData();
               formData.append("image", file);
 
               try {
-                const res = await api.post("/upload", formData, {
-                  headers: {
-                    "Content-Type": "multipart/form-data"
-                  }
-                });
+                const res = await api.post("/upload", formData);
 
-                setForm(prev => ({
+                const imageUrl =
+                  res.data?.url ||
+                  (res.data?.image ? `${BASE_URL}${res.data.image}` : "");
+
+                setForm((prev) => ({
                   ...prev,
-                  image: res.data.url
+                  image: imageUrl,
                 }));
-
               } catch (err) {
                 console.error(err);
                 alert("Upload gagal");
@@ -125,7 +117,6 @@ const AddProductModal = ({ open, onClose, onCreated }) => {
               Tambah
             </button>
           </div>
-
         </form>
       </div>
     </div>

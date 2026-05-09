@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { api } from "../../services/api";
+import { api, BASE_URL } from "../../services/api";
 
 const EditProductModal = ({ open, onClose, product, onUpdated }) => {
   const [form, setForm] = useState({
     name: "",
     description: "",
     price: "",
-    image: ""
+    image: "",
   });
 
   const [preview, setPreview] = useState(null);
@@ -17,7 +17,7 @@ const EditProductModal = ({ open, onClose, product, onUpdated }) => {
         name: product.name || "",
         description: product.description || "",
         price: product.price || "",
-        image: product.image || ""
+        image: product.image || "",
       });
       setPreview(null);
     }
@@ -34,23 +34,19 @@ const EditProductModal = ({ open, onClose, product, onUpdated }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    await api.patch("/products/", {
-      id: product.id,
+    await api.put(`/products/${product.id}`, {
       ...form,
-      price: Number(form.price)
+      price: Number(form.price),
     });
 
-    onUpdated();   // refresh state di parent
-    onClose();     // tutup modal
+    onUpdated(); // refresh state di parent
+    onClose(); // tutup modal
   };
 
   return (
     <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50">
       <div className="bg-white w-full max-w-md rounded-xl p-6">
-
-        <h2 className="text-xl font-semibold mb-4">
-          Edit Produk
-        </h2>
+        <h2 className="text-xl font-semibold mb-4">Edit Produk</h2>
 
         <div className="flex justify-center mb-4">
           <img
@@ -58,15 +54,14 @@ const EditProductModal = ({ open, onClose, product, onUpdated }) => {
               preview
                 ? preview
                 : form.image
-                ? form.image
-                : "/assets/fallback.webp"
+                  ? form.image
+                  : "/assets/fallback.webp"
             }
             className="w-32 h-32 object-cover rounded-lg border"
           />
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-
           <input
             value={form.name}
             onChange={(e) => setForm({ ...form, name: e.target.value })}
@@ -100,17 +95,16 @@ const EditProductModal = ({ open, onClose, product, onUpdated }) => {
               formData.append("image", file);
 
               try {
-                const res = await api.post("/upload", formData, {
-                  headers: {
-                    "Content-Type": "multipart/form-data"
-                  }
-                });
+                const res = await api.post("/upload", formData);
 
-                setForm(prev => ({
+                const imageUrl =
+                  res.data?.url ||
+                  (res.data?.image ? `${BASE_URL}${res.data.image}` : "");
+
+                setForm((prev) => ({
                   ...prev,
-                  image: res.data.url
+                  image: imageUrl,
                 }));
-
               } catch (err) {
                 console.error(err);
                 alert("Upload gagal");
@@ -132,7 +126,6 @@ const EditProductModal = ({ open, onClose, product, onUpdated }) => {
               Simpan
             </button>
           </div>
-
         </form>
       </div>
     </div>
