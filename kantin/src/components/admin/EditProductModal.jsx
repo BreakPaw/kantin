@@ -33,11 +33,13 @@ const EditProductModal = ({ open, onClose, product, onUpdated }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    console.log("FORM:", form);
     await api.patch("/products", {
       id: product.id,
-      ...form,
+      name: form.name,
+      description: form.description,
       price: Number(form.price),
+      image: form.image,
     });
 
     onUpdated(); // refresh state di parent
@@ -98,10 +100,10 @@ const EditProductModal = ({ open, onClose, product, onUpdated }) => {
               try {
                 const res = await api.post("/upload", formData);
 
-                const imageUrl =
-                  res.data?.url ||
-                  (res.data?.image ? `${BASE_URL}${res.data.image}` : "");
-                console.log(res.data);
+                const imageUrl = res.data.url;
+
+                console.log("IMAGE URL:", imageUrl);
+
                 setForm((prev) => ({
                   ...prev,
                   image: imageUrl,
