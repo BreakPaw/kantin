@@ -40,7 +40,9 @@ const Menu = () => {
   }, [search]);
 
   const handleDelete = async (id) => {
-    await api.delete(`/products/${id}`);
+    await api.delete("/products", {
+      data: { id },
+    });
     fetchProducts();
   };
 
