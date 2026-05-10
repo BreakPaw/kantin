@@ -46,14 +46,16 @@ const Menu = () => {
 
   const handleToggle = async (id) => {
     try {
-      const res = await api.patch("/toggle",{
+      const res = await api.patch("/toggle", {
         id,
       });
 
       setProducts((prev) =>
         prev.map((p) =>
-          p.id === id ? { ...p, available: res.data.available } : p,
-        ),
+          p.id === id
+            ? { ...p, available: res.data.available }
+            : p
+        )
       );
     } catch (err) {
       console.error(err);
