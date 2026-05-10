@@ -101,7 +101,7 @@ const EditProductModal = ({ open, onClose, product, onUpdated }) => {
                 const imageUrl =
                   res.data?.url ||
                   (res.data?.image ? `${BASE_URL}${res.data.image}` : "");
-
+                console.log(res.data);
                 setForm((prev) => ({
                   ...prev,
                   image: imageUrl,
