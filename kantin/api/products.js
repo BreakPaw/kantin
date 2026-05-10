@@ -86,7 +86,7 @@ export default async function handler(req, res) {
         ...(name !== undefined && { name }),
         ...(description !== undefined && { description }),
         ...(price !== undefined && { price }),
-        ...(image !== undefined && { image }),
+        ...(image && { image }),
         ...(available !== undefined && { available }),
       })
       .eq("id", id)
