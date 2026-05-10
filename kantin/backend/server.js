@@ -7,11 +7,7 @@ import path from "path";
 // import paymentRoutes from "./routes/payment.js";
 // import webhookRoutes from "./routes/webhook.js";
 const app = express();
-// const cors = require('cors');
-// app.use(cors({
-//   origin: 'https://kantin-clean.vercel.app',
-//   credentials: true
-// }));
+
 app.use(
   cors({
     origin: "*",

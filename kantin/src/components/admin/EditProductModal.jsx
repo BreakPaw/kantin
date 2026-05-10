@@ -34,7 +34,8 @@ const EditProductModal = ({ open, onClose, product, onUpdated }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    await api.put(`/products/${product.id}`, {
+    await api.put("/products", {
+      id: product.id,
       ...form,
       price: Number(form.price),
     });
