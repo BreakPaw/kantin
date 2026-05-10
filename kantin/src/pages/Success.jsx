@@ -23,7 +23,7 @@ const Success = () => {
   useEffect(() => {
     const fetchOrder = async () => {
       try {
-        const res = await api.get(`/orders/${orderId}`);
+        const res = await api.get(`/orders?id=${orderId}`);
 
         console.log("SUCCESS ORDER:", res.data);
 
