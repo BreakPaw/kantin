@@ -14,7 +14,8 @@ const Payment = () => {
   // 🔹 fetch order
   useEffect(() => {
     const fetchOrder = async () => {
-      const res = await api.get(`/orders/${orderId}`);
+      const res = await api.get(`/orders?id=${orderId}`);
+      console.log("FETCH ORDER:", res.data);
       setOrder(res.data);
     };
 
@@ -26,7 +27,7 @@ const Payment = () => {
     if (!order) return;
 
     const interval = setInterval(async () => {
-      const res = await api.get(`/orders/${orderId}`);
+      const res = await api.get(`/orders?id=${orderId}`);
 
       if (res.data.status === "paid") {
         clearInterval(interval);

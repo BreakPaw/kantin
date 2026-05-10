@@ -22,7 +22,8 @@ const Orders = () => {
   }, []);
 
   const updateStatus = async (id, status) => {
-    await api.patch(`/orders/${id}/status`, {
+    await api.patch("/status", {
+      id,
       status,
     });
 
@@ -36,7 +37,8 @@ const Orders = () => {
 
   const approveOrder = async (id) => {
     try {
-      await api.patch(`/orders/${id}/status`, {
+      await api.patch("/status", {
+        id,
         status: "paid",
       });
 

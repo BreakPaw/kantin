@@ -69,7 +69,7 @@ const PaymentSummary = ({ order }) => {
         <p className="text-sm text-gray-500">TOTAL PEMBAYARAN</p>
 
         <h2 className="text-3xl font-bold text-[#1D6E4F] mt-2">
-          Rp {order?.total?.toLocaleString()}
+          Rp {Number(order?.total || 0).toLocaleString()}
         </h2>
 
         <p className="text-sm text-yellow-600 mt-2">

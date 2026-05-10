@@ -36,8 +36,8 @@ const OrderSummary = ({ form, isValid }) => {
           note: form.note || "",
         },
       });
-
-      const orderId = res.data.id;
+      console.log("ORDER RESPONSE:", res.data);
+      const orderId = res.data[0].id;
 
       const myOrders = JSON.parse(localStorage.getItem("my_orders")) || [];
 
