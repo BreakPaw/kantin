@@ -38,7 +38,7 @@ const Success = () => {
 
     return () => clearInterval(interval);
   }, [orderId]);
-
+  console.log("ORDER:", order);
   if (!order) return <p>Loading...</p>;
 
   const customer =
