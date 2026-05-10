@@ -1,16 +1,18 @@
-import { IoWallet, IoFastFood } from "react-icons/io5";
+import { IoWallet, IoFastFood, IoCheckmarkDone } from "react-icons/io5";
 import { FaBoxesPacking } from "react-icons/fa6";
 
 const steps = [
   { key: "paid", label: "Dibayar", icon: <IoWallet /> },
   { key: "preparing", label: "Diproses", icon: <FaBoxesPacking /> },
   { key: "ready", label: "Siap Diambil", icon: <IoFastFood /> },
+  { key: "done", label: "Selesai", icon: <IoCheckmarkDone /> },
 ];
 
 const statusIndex = {
   paid: 0,
   preparing: 1,
   ready: 2,
+  done: 3,
 };
 
 const OrderStatus = ({ status }) => {
@@ -76,7 +78,8 @@ const OrderStatus = ({ status }) => {
           <p className="text-gray-500 text-sm mt-1">
             {currentStep === 0 && "Menunggu konfirmasi dapur"}
             {currentStep === 1 && "Koki sedang menyiapkan makananmu"}
-            {currentStep === 2 && "Pesanan siap dinikmati!"}
+            {currentStep === 2 && "Pesanan siap diambil!"}
+            {currentStep === 3 && "Pesanan telah selesai 🎉"}
           </p>
         </div>
 

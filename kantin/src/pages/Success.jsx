@@ -24,7 +24,7 @@ const Success = () => {
     const fetchOrder = async () => {
       try {
         const res = await api.get(`/orders?id=${orderId}`);
-        setOrder(res.data);
+        setOrder(res.data[0]);
       } catch (err) {
         console.error(err);
       }
