@@ -1,4 +1,3 @@
-import { api } from "../../services/api";
 
 const ProductCard = ({ product, onDelete, onToggle, onEdit }) => {
   return (

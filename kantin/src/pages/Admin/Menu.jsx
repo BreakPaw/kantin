@@ -46,7 +46,7 @@ const Menu = () => {
 
   const handleToggle = async (id) => {
     try {
-      const res = await api.patch(`/products/${id}/toggle`);
+      const res = await api.patch("/toggle");
 
       setProducts((prev) =>
         prev.map((p) =>
