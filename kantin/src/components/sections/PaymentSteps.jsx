@@ -71,7 +71,8 @@ const PaymentSteps = () => {
     }
 
     try {
-      await api.patch(`/orders/${orderId}/status`, {
+      await api.patch("/status", {
+        id: orderId,
         status: "paid",
       });
 
