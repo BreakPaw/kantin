@@ -46,7 +46,11 @@ const Menu = () => {
 
   const handleToggle = async (id) => {
     try {
-      const res = await api.patch("/products", {
+      const product = products.find((p) => p.id === id);
+
+      const newValue = product.available ? 0 : 1;
+
+      await api.patch("/products", {
         id,
         available: newValue,
       });
