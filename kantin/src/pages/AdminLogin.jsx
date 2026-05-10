@@ -36,7 +36,7 @@ const AdminLogin = () => {
     email,
     password,
     options: {
-      emailRedirectTo: "https://kantin-clean.vercel.app/admin/login"
+      emailRedirectTo: "https://kantinabi.vercel.app/admin/login"
     }
   });
 
