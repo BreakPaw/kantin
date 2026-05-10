@@ -16,7 +16,12 @@ const statusIndex = {
 };
 
 const OrderStatus = ({ status }) => {
-  const currentStep = statusIndex[status] ?? 1;
+  const currentStep =
+    statusIndex[status] !== undefined
+      ? statusIndex[status]
+      : 0;
+  console.log("STATUS:", status);
+  console.log("CURRENT STEP:", currentStep);
   const progressWidth = (currentStep / (steps.length - 1)) * 100;
 
   return (
