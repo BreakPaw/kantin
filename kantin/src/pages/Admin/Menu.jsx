@@ -46,14 +46,15 @@ const Menu = () => {
 
   const handleToggle = async (id) => {
     try {
-      const res = await api.patch("/toggle", {
+      const res = await api.patch("/products", {
         id,
+        available: newValue,
       });
 
       setProducts((prev) =>
         prev.map((p) =>
           p.id === id
-            ? { ...p, available: res.data.available }
+            ? { ...p, available: newValue }
             : p
         )
       );

@@ -70,7 +70,8 @@ export default async function handler(req, res) {
       name,
       description,
       price,
-      image
+      image,
+      available
     } = req.body;
 
     console.log("ID received from FE:", id);
@@ -82,10 +83,11 @@ export default async function handler(req, res) {
     const { data, error } = await supabase
       .from("products")
       .update({
-        name,
-        description,
-        price,
-        image
+        ...(name !== undefined && { name }),
+        ...(description !== undefined && { description }),
+        ...(price !== undefined && { price }),
+        ...(image !== undefined && { image }),
+        ...(available !== undefined && { available }),
       })
       .eq("id", id)
       .select();
