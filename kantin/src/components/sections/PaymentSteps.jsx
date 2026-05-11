@@ -27,6 +27,7 @@ const PaymentSteps = () => {
   const [proof, setProof] = useState(null);
   const navigate = useNavigate();
   const { orderId } = useParams();
+  const [uploading, setUploading] = useState(false);
 
   const handleUpload = async () => {
     if (!file) {
@@ -34,20 +35,23 @@ const PaymentSteps = () => {
       return;
     }
 
-    if (!orderId) {
-      alert("Id order tidak ada");
-      return;
-    }
+    if (uploading) return;
+
+    setUploading(true);
 
     try {
       const formData = new FormData();
       formData.append("file", file);
+
+      // delay kecil
+      await new Promise((resolve) => setTimeout(resolve, 500));
 
       const res = await api.post("/upload-proof", formData);
 
       const proofUrl = res.data?.url?.startsWith("http")
         ? res.data.url
         : `${BASE_URL}${res.data.url}`;
+
       setProof(proofUrl);
 
       await api.patch("/proof", {
@@ -55,12 +59,20 @@ const PaymentSteps = () => {
         proof: proofUrl,
       });
 
-      console.log("URL bukti:", res.data.url);
+      alert("Upload berhasil");
+
     } catch (err) {
+
       console.error("UPLOAD ERROR:", err);
-      console.error("RESPONSE:", err.response);
-      console.error("DATA:", err.response?.data);
-      alert(err.response?.data?.error || err.message || "Upload gagal");
+
+      alert(
+        err.response?.data?.error ||
+        err.message ||
+        "Upload gagal"
+      );
+
+    } finally {
+      setUploading(false);
     }
   };
 
@@ -127,10 +139,11 @@ const PaymentSteps = () => {
         <input type="file" onChange={(e) => setFile(e.target.files[0])} />
 
         <button
+          disabled={uploading}
           onClick={handleUpload}
           className="mt-3 w-full bg-[#1D6E4F] text-white py-2 rounded-full"
         >
-          Kirim Bukti Pembayaran
+          {uploading ? "Uploading..." : "Kirim Bukti Pembayaran"}
         </button>
 
         {proof && (
