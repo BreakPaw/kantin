@@ -57,8 +57,10 @@ const PaymentSteps = () => {
 
       console.log("URL bukti:", res.data.url);
     } catch (err) {
-      console.error(err);
-      alert("Upload gagal");
+      console.error("UPLOAD ERROR:", err);
+      console.error("RESPONSE:", err.response);
+      console.error("DATA:", err.response?.data);
+      alert(err.response?.data?.error || err.message || "Upload gagal");
     }
   };
 
