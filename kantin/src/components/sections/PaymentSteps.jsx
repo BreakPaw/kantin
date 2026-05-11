@@ -44,7 +44,7 @@ const PaymentSteps = () => {
       formData.append("file", file);
 
       // delay kecil
-      await new Promise((resolve) => setTimeout(resolve, 500));
+      await new Promise((resolve) => setTimeout(resolve, 2000));
 
       const res = await api.post("/upload-proof", formData);
 
